@@ -1,0 +1,18 @@
+{
+  "name": "tocheck-out",
+  "version": "0.0.0",
+  "description": "TOCheckOut",
+  "main": "server.js",
+  "author": {
+    "name": "tnthompson"
+  },
+  "dependencies": {
+    "express": "^4.16.2",
+    "express-handlebars": "^3.0.0",
+    "jquery-file-upload-middleware": "^0.1.8"
+  },
+  "devDependencies": {
+    "grunt": "^1.0.2",
+    "grunt-cafe-mocha": "^0.1.13"
+  }
+}

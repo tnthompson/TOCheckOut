@@ -1,0 +1,170 @@
+﻿<img src={{img}} alt="Mountain View" />
+
+<div class="btn-group">
+
+    <form role="form"
+          action="/charger" method="POST">
+        <input type="hidden" name="pin" value="{{pin}}"/>
+        <input type="hidden" name="model" value="{{model}}"/>
+
+        <button type="submit" value="submit" class="button">Charger</button>
+    </form>
+
+
+    <form role="form"
+          action="/chromebook" method="POST">
+        <input type="hidden" name="pin" value="{{pin}}" />
+        <input type="hidden" name="model" value="{{model}}" />
+
+        <button type ="submit" class="button">Chromebook</button>
+
+        <div class="barcode">
+            <label for="usr">Loaner Barcode:</label>
+            <input name="barcode" type="text" class="form-control" id="usr">
+        </div>
+
+
+ {{!  <script>
+            function chromebook() {
+                var txt;
+                var numbers = /^[0-9]{4}$/;
+                var barcode = prompt("Enter Loaner Barcode:");
+                if (barcode == null || barcode == "") {
+                    txt = "User cancelled the prompt.";
+                } else {
+                }
+                document.getElementById("chromebook").innerHTML = txt;
+            }
+        </script>
+        }}
+    </form>
+
+        <button class="button">Return</button>
+</div>
+
+<style>
+    .btn-group {
+        padding: 15px 32px;
+        margin-right: 10px;
+        display: inline-block;
+        margin-left: 100px;
+        width: 33%;
+       
+    }
+
+    .button {
+        background-color: #f50909;
+        display: block;
+        padding: 15px 32px;
+        cursor: pointer;
+        width: 200%;
+        text-align: center;
+        font-size: 25px;
+    }
+
+    .btn-group .button:hover {
+        background-color: #100c6d;
+        color: white;
+    }
+</style>
+
+{{! Student table CSS}}
+<style>
+    #studentInfo {
+        margin-top: 20px;
+        width: 50%;
+        float: left;
+    }
+
+    #studentInfo td, #studentInfo th {
+        border: 1px solid #ddd;
+        padding: 8px;
+    }
+
+    #studentInfo th {
+        padding-top: 15px;
+        padding-bottom: 15px;
+        text-align: left;
+        background-color: white;
+        color: black;
+        font-size: 20px;
+        background-color: lightgray;
+    }
+
+</style>
+<table id="studentInfo">
+    <tr>
+        <th>STUDENT INFORMATION</th>
+    </tr>
+    <tr>
+        <td><strong>First Name:</strong> {{FName}}</td>
+    </tr>
+    <tr>
+        <td><strong>Last Name:</strong> {{LName}}</td>
+    </tr>
+    <tr>
+        <td><strong>Grade:</strong>: {{Grade}}</td>
+    </tr>
+    <tr>
+        <td><strong>Graudation Year:</strong> {{Grad}}</td>
+    </tr>
+    <tr>
+        <td><strong>Lunch Code:</strong> {{pin}}</td>
+    </tr>
+</table>
+
+
+
+<table id="computerInfo">
+    <tr>
+        <th>COMPUTER INFORMATION </th>
+    </tr>
+    <tr>
+        <td><strong>Barcode:</strong> {{barcode}}</td>
+    </tr>
+
+    <tr>
+        <td><strong>Brand: </strong> {{brand}}</td>
+    </tr>
+    <tr>
+        <td><strong>Type: </strong> {{type}} </td>
+    </tr>
+    <tr>
+        <td><strong>Model Number:</strong> {{model}}</td>
+    </tr>
+    <tr>
+        <td><strong>Vendor: </strong> {{vendor}}</td>
+    </tr>
+    <tr>
+        <td><strong>CDI Number: </strong> {{cdi}}</td>
+    </tr>
+    <tr>
+        <td><strong>Serial Number:</strong> {{serial}}</td>
+    </tr>
+    <tr>
+        <td><strong>Purchase Date:</strong> {{PDate}}</td>
+    </tr>
+</table>
+
+{{!Device table CSS}}
+<style>
+    #computerInfo {
+        margin-top: 20px;
+        width: 50%;
+    }
+
+    #computerInfo td, #computerInfo th {
+        border: 1px solid #ddd;
+        padding: 8px;
+    }
+
+    #computerInfo th {
+        padding-top: 15px;
+        padding-bottom: 15px;
+        text-align: left;
+        background-color: white;
+        color: black;
+        font-size: 20px;
+        background-color: lightgray;
+    }
+</style>

@@ -1,0 +1,196 @@
+﻿<style>
+    html {
+        red;
+    }
+    body {
+        font: 300 18px/1.6 "Source Sans Pro",sans-serif;
+        margin: 0;
+        padding: 10px;
+        text-align: center;
+        background-color: none
+    }
+
+    h1 {
+        font-weight: 300;
+        margin: 0;
+    }
+
+    button {
+        border: 0;
+        color: #6cacc5;
+        cursor: pointer;
+        float: left;
+        font: inherit;
+        margin: 0.25em;  
+        background: #201e40;
+    }
+
+    .reset {
+        background: rgba(201,120,116,.28);
+        color: #c97874;
+        font-weight: 400;
+        margin-left: -77px;
+        padding: 0.5em 1em;
+        position: absolute;
+        top: -20em;
+        left: 50%;
+        width: auto;
+        height: auto;
+        &:hover
+
+    {
+        background: #c97874;
+        color: #100a1c;
+    }
+
+    /* When button is revealed */
+    &.show {
+        top: 20em;
+        animation: fadein 4s;
+    }
+
+    }
+
+    .num {
+        border: ridge;
+        color: white;
+        padding: 15px 40px;
+        text-align: center;
+        display: inline-block;
+        font-size: 30px;
+    }
+
+    .go {
+        border: ridge;
+        color: white;
+        padding: 15px 40px;
+        text-align: center;
+        display: inline-block;
+        font-size: 30px;
+        margin-top: 10px;
+    }
+
+    .clear {
+        border: ridge;
+        color: white;
+        padding: 15px 40px;
+        text-align: center;
+        display: inline-block;
+        font-size: 30px;
+    }
+
+    .Lunchcode {
+        text-align: left;
+    }
+
+</style>
+
+<h1>Who are you? </h1>
+
+<form class="form-horizontal" role="form"
+      action="/process?" method="POST">
+
+    <div class="Lunchcode">
+        <label for="usr">Lunch Code:</label>
+        <input name="pin" type="text" class="form-control" id="usr">
+    </div>
+
+    <div class="col"><button type="submit" class="go">Go</button></div>
+
+</form>
+    <div class="container">
+        <div class="row">
+            <div class="col"><button class="num" data-num="7">7</button></div>
+            <div class="col"><button class="num" data-num="8">8</button></div>
+            <div class="col"><button class="num" data-num="9">9</button></div>
+            <div class="w-100"></div>
+            <div class="col"><button class="num" data-num="4">4</button></div>
+            <div class="col"><button class="num" data-num="5">5</button></div>
+            <div class="col"><button class="num" data-num="6">6</button></div>
+            <div class="w-100"></div>
+            <div class="col"><button class="num" data-num="1">1</button></div>
+            <div class="col"><button class="num" data-num="2">2</button></div>
+            <div class="col"><button class="num" data-num="3">3</button></div>
+            <div class="w-100"></div>
+            <div class="col"><button id="clear" class="clear">C</button></div>
+            <div class="col"><button class="num" data-num="0">0</button></div>
+        </div>
+    </div>
+
+<script>
+    (function () {
+        "use strict";
+
+        // Shortcut to get elements
+        var el = function (element) {
+            if (element.charAt(0) === "#") { // If passed an ID...
+                return document.querySelector(element); // ... returns single element
+            }
+
+            return document.querySelectorAll(element); // Otherwise, returns a nodelist
+        };
+
+        // Variables
+        var viewer = el("#viewer"), // Calculator screen where result is displayed
+            equals = el("#equals"), // Equal button
+            nums = el(".num"), // List of numbers
+            theNum = "", // Current number
+            oldNum = "", // First number
+            resultNum, // Result
+            operator; // Batman
+
+        // When: Number is clicked. Get the current number selected
+        var setNum = function () {
+            if (resultNum) { // If a result was displayed, reset number
+                theNum = this.getAttribute("data-num");
+                resultNum = "";
+            } else { // Otherwise, add digit to previous number (this is a string!)
+                theNum += this.getAttribute("data-num");
+            }
+
+            // viewer.innerHTML = theNum; // Display current number
+            usr.value = theNum;
+        };
+
+        // When: Operator is clicked. Pass number to oldNum and save operator
+        var moveNum = function () {
+            oldNum = theNum;
+            theNum = "";
+            operator = this.getAttribute("data-ops");
+
+            equals.setAttribute("data-result", ""); // Reset result in attr
+        };
+
+        // When: Equals is clicked. Calculate result
+        var displayNum = function () {
+
+            // Convert string input to numbers
+            oldNum = parseFloat(oldNum);
+            theNum = parseFloat(theNum);
+
+            // Display result, finally!
+            viewer.innerHTML = resultNum;
+            equals.setAttribute("data-result", resultNum);
+
+            // Now reset oldNum & keep result
+            oldNum = 0;
+            theNum = resultNum;
+        };
+
+        // When: Clear button is pressed. Clear everything
+        var clearAll = function () {
+            oldNum = "";
+            theNum = "";
+            usr.value = theNum;
+        };
+
+        /* The click events */
+        // Add click event to numbers
+        for (var i = 0, l = nums.length; i < l; i++) {
+            nums[i].onclick = setNum;
+        }
+
+        // Add click event to clear button
+        el("#clear").onclick = clearAll;
+    }());
+</script>
