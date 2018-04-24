@@ -3,4 +3,21 @@ TrevmongoDB
 
 Keaton
 Collins
-asdfasf
+
+
+
+
+NEED TO DO
+    Fix CSS on checkout.handlebars so the touchpad is on left side of screen
+
+    Create checkout table that says what is currently checked out
+        Color code by date (out for over 24 hours = color; out for less than 24 hours = color)
+        Return button
+            Who?
+            Damage?
+        Details popup button for each student.
+
+    Repair Page
+        Create checklist of possible damages to chromebook/charger
+        How it happened?
+        When it happened?

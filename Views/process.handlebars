@@ -39,7 +39,14 @@
         }}
     </form>
 
-        <button class="button">Return</button>
+    <form role="form"
+            action="/repair" method="POST">
+        <input type="hidden" name="pin" value="{{pin}}"/>
+        <input type="hidden" name="model" value="{{model}}"/>
+
+        <button type="submit" value="submit" class="button">Repair</button>
+    </form>
+    
 </div>
 
 <style>
