@@ -1,87 +1,89 @@
 ﻿<style>
-    html {
-        red;
-    }
-    body {
-        font: 300 18px/1.6 "Source Sans Pro",sans-serif;
-        margin: 0;
-        padding: 10px;
-        text-align: center;
-        background-color: none
-    }
+    
 
-    h1 {
-        font-weight: 300;
-        margin: 0;
-    }
+ * {  
+margin: 0;  
+padding: 0;  
+}  
+body {  
+font: 71%/1.5 Verdana, Sans-Serif;  
+background: #eee;  
+}  
+#container {  
+margin: 100px auto;  
+width: 220px;  
+float:left;
+}   
+.letter{
+    padding:5px auto;
+}
+#keyboard {  
+margin: 0;  
+padding:0;  
+list-style: none;  
+}  
+    #keyboard li {  
+    float: left;  
+    margin: 0 5px 5px 0;  
+    width: 60px;  
+    height: 60px;  
+    font-size: 24px;
+    line-height: 60px;  
+    text-align: center;  
+    background: #fff;  
+    border: 1px solid #f9f9f9;  
+    border-radius: 5px;  
+    }  
+        .capslock, .tab, .left-shift, .clearl, .switch {  
+        clear: left;  
+        }  
+            #keyboard .tab, #keyboard .delete {  
+            width: 70px;  
+            }  
+            #keyboard .capslock {  
+            width: 80px;  
+            }  
+            #keyboard .return {  
+            width: 90px;  
+            }  
+            #keyboard .left-shift{  
+            width: 70px;  
+            }  
 
-    button {
-        border: 0;
-        color: #6cacc5;
-        cursor: pointer;
+            #keyboard .switch {
+            width: 90px;
+            }
+            #keyboard .rightright-shift {  
+            width: 109px;  
+            }  
+        .lastitem {  
+        margin-right: 0;  
+        }  
+        .uppercase {  
+        text-transform: uppercase;  
+        }  
+        #keyboard .space {  
         float: left;
-        font: inherit;
-        margin: 0.25em;  
-        background: #201e40;
-    }
-
-    .reset {
-        background: rgba(201,120,116,.28);
-        color: #c97874;
-        font-weight: 400;
-        margin-left: -77px;
-        padding: 0.5em 1em;
-        position: absolute;
-        top: -20em;
-        left: 50%;
-        width: auto;
-        height: auto;
-        &:hover
-
-    {
-        background: #c97874;
-        color: #100a1c;
-    }
-
-    /* When button is revealed */
-    &.show {
-        top: 20em;
-        animation: fadein 4s;
-    }
-
-    }
-
-    .num {
-        border: ridge;
-        color: white;
-        padding: 15px 40px;
-        text-align: center;
-        display: inline-block;
-        font-size: 30px;
-    }
-
-    .go {
-        border: ridge;
-        color: white;
-        padding: 15px 40px;
-        text-align: center;
-        display: inline-block;
-        font-size: 30px;
-        margin-top: 10px;
-    }
-
-    .clear {
-        border: ridge;
-        color: white;
-        padding: 15px 40px;
-        text-align: center;
-        display: inline-block;
-        font-size: 30px;
-    }
+        width: 556px;  
+        }  
+        #keyboard .switch, #keyboard .space, #keyboard .return{
+        font-size: 16px;
+        }
+        .on {  
+        display: none;  
+        }  
+        #keyboard li:hover {  
+        position: relative;  
+        top: 1px;  
+        left: 1px;  
+        border-color: #e5e5e5;  
+        cursor: pointer;  
+        }  
 
     .Lunchcode {
         text-align: left;
     }
+
 
 </style>
 
@@ -98,23 +100,22 @@
     <div class="col"><button type="submit" class="go">Go</button></div>
 
 </form>
-    <div class="container">
-        <div class="row">
-            <div class="col"><button class="num" data-num="7">7</button></div>
-            <div class="col"><button class="num" data-num="8">8</button></div>
-            <div class="col"><button class="num" data-num="9">9</button></div>
-            <div class="w-100"></div>
-            <div class="col"><button class="num" data-num="4">4</button></div>
-            <div class="col"><button class="num" data-num="5">5</button></div>
-            <div class="col"><button class="num" data-num="6">6</button></div>
-            <div class="w-100"></div>
-            <div class="col"><button class="num" data-num="1">1</button></div>
-            <div class="col"><button class="num" data-num="2">2</button></div>
-            <div class="col"><button class="num" data-num="3">3</button></div>
-            <div class="w-100"></div>
-            <div class="col"><button id="clear" class="clear">C</button></div>
-            <div class="col"><button class="num" data-num="0">0</button></div>
-        </div>
+    <div id="container">
+        <ul id="keyboard">
+
+            <li class="letter num" data-num="1">1</li>
+            <li class="letter num" data-num="2">2</li>
+            <li class="letter num" data-num="3">3</li>
+            <li class="letter clear1 num" data-num="4">4</li>
+            <li class="letter num" data-num="5">5</li>
+            <li class="letter num" data-num="6">6</li>
+
+            <li class="letter clear1 num" data-num="7">7</li>
+            <li class="letter num" data-num="8">8</li>
+            <li class="letter num" data-num="9">9</li>
+            <li class="letter num" data-num="0">0</li>
+            <li class="return num delete" data-num="">return</li>
+        </ul>
     </div>
 
 <script>
@@ -192,5 +193,6 @@
 
         // Add click event to clear button
         el("#clear").onclick = clearAll;
+   
     }());
 </script>
