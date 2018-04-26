@@ -1,1 +1,55 @@
 {{!checklist of repairs}}
+
+<style>
+    .form-control {
+    width: 100%;
+    height: 150px;
+    padding: 12px 20px;
+    box-sizing: border-box;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    background-color: #f8f8f8;
+    resize: none;
+}
+</style>
+
+
+<form role="form"
+        action="/repair2" method="POST">
+    <input type="hidden" name="pin" value="{{pin}}" />
+    <input type="hidden" name="model" value="{{model}}" />
+    <input type="hidden" name="barcode" value="{{barcode}}" />
+    
+
+    <div class="checkbox">
+    <label><input type="checkbox" name="damages" value="Keyboard">Keyboard</label>
+    </div>
+    <div class="checkbox">
+    <label><input type="checkbox"  name="damages" value= "Display">Display</label>
+    </div>
+    <div class="checkbox">
+    <label><input type="checkbox" name="damages" value= "Case">Case</label>
+    </div>
+    <div class="checkbox">
+    <label><input type="checkbox" name="damages" value= "Touchpad">Touchpad</label>
+    </div>
+    <div class="checkbox">
+    <label><input type="checkbox" name="damages" value= "Sound System">Sound System</label>
+    </div>
+    <div class="checkbox">
+    <label><input type="checkbox" name="damages" value= "Charger">Charger</label>
+    </div>
+    <div class="checkbox">
+    <label><input type="checkbox" name="damages" value= "Other">Other</label>
+    </div>
+
+        <div class = "report">
+            <label for="usr">Report:</label>
+            <input name="report"  type="text" class="form-control" id="usr">   
+
+    <div class="checkbox">
+    <label><input type="checkbox"  name="StudRes" value= "True">Student Responsibility</label>
+    </div>
+        <button type ="submit" class="button">Submit</button>
+    </div>
+</form>

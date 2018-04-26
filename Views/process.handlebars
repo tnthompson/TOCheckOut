@@ -37,12 +37,16 @@
             }
         </script>
         }}
+        
     </form>
 
     <form role="form"
             action="/repair" method="POST">
         <input type="hidden" name="pin" value="{{pin}}"/>
         <input type="hidden" name="model" value="{{model}}"/>
+        <input type="hidden" name="barcode" value="{{barcode}}"/>
+        <input type="hidden" name="FName" value="{{FName}}"/>
+        <input type="hidden" name="LName" value="{{LName}}"/>
 
         <button type="submit" value="submit" class="button">Repair</button>
     </form>

@@ -105,7 +105,32 @@ app.post('/chromebook', function (req, res) {
 });
 
 app.post('/repair', function (req, res) {
-    res.render('repair');
+    res.render('repair' , {
+        pin: req.body.pin,
+        FName: req.body.First_Name,
+        LName: req.body.Last_Name,
+        barcode: req.body.barcode,
+        model: req.body.model
+    });
+});
+
+app.post('/repair2', function(req, res) {
+    console.log(req.body.pin)
+    db.collection('students').findAndModify({ "ID": parseInt(req.body.pin) },
+        [['_id', 'asc']], {
+            $addToSet: {
+                Activities: { Date: new Date(), Model: (req.body.model), Barcode: (req.body.barcode), Description: (req.body.report), Damages: (req.body.damages), StudRes: (req.body.StudRes),  DateReturn: "", Returned: false }
+            }
+
+        }, { upsert: 1 },
+        function (err, thing) {
+            if (err) {
+                console.log(err);
+            } else {
+                console.log(thing);
+            }
+        });
+    res.render('checkout') 
 });
 
 // 404 page
