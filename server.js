@@ -39,6 +39,14 @@ app.get('/damage', function (req, res) {
     res.render('damage');
 });
 
+app.get('/test', function (req, res){
+    db.collection('students').find({ "Activities.Returned": { $exists: true } } , function (err, student) {
+       console.log(student);
+        res.render('test',{
+            student:student
+        });
+    });
+});
 app.post('/process', function (req, res) {
     db.collection('students').findOne({ ID: parseInt(req.body.pin) }, function (err, student) {
 
@@ -69,7 +77,7 @@ app.post('/charger', function (req, res) {
     db.collection('students').findAndModify({ "ID": parseInt(req.body.pin) },
         [['_id', 'asc']], {
                 $addToSet: {
-                    Activities: { Date: new Date(), Description: (req.body.model), DateReturn: "", Returned : false }
+                    Activities: { Date: new Date(), Model: (req.body.model), Type: "Charger",  DateReturn: "", Returned : false }
                 }
             
         }, { upsert: 1 },
@@ -89,7 +97,7 @@ app.post('/chromebook', function (req, res) {
     db.collection('students').findAndModify({ "ID": parseInt(req.body.pin) },
         [['_id', 'asc']], {
             $addToSet: {
-                Activities: { Date: new Date(), Description: (req.body.model), Barcode: (req.body.barcode),  DateReturn: "", Returned: false }
+                Activities: { Date: new Date(), Model: (req.body.model), Barcode: (req.body.barcode), Type: "Chromebook",  DateReturn: "", Returned: false }
             }
 
         }, { upsert: 1 },
@@ -132,6 +140,8 @@ app.post('/repair2', function(req, res) {
         });
     res.render('checkout') 
 });
+
+
 
 // 404 page
 app.use(function (req, res, next) {
