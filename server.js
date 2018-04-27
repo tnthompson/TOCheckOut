@@ -97,7 +97,7 @@ app.post('/chromebook', function (req, res) {
     db.collection('students').findAndModify({ "ID": parseInt(req.body.pin) },
         [['_id', 'asc']], {
             $addToSet: {
-                Activities: { Date: new Date(), Model: (req.body.model), Barcode: (req.body.barcode), Type: "Chromebook",  DateReturn: "", Returned: false }
+                Activities: { Date: new Date(), Model: (req.body.model), Type: "Chromebook", Loaner: (req.body.loaner), DateReturn: "", Returned: false }
             }
 
         }, { upsert: 1 },
@@ -127,7 +127,7 @@ app.post('/repair2', function(req, res) {
     db.collection('students').findAndModify({ "ID": parseInt(req.body.pin) },
         [['_id', 'asc']], {
             $addToSet: {
-                Activities: { Date: new Date(), Model: (req.body.model), Barcode: (req.body.barcode), Description: (req.body.report), Damages: (req.body.damages), StudRes: (req.body.StudRes),  DateReturn: "", Returned: false }
+                Activities: { Date: new Date(), Model: (req.body.model), Barcode: (req.body.barcode), Description: (req.body.report), Damages: (req.body.damages), StudRes: (req.body.StudRes), Loaner:(req.body.loaner), DateReturn: "", Returned: false }
             }
 
         }, { upsert: 1 },
