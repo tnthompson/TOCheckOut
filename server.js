@@ -32,11 +32,59 @@ app.use(express.static(__dirname + '/public'));
 app.use(require('body-parser')());
 
 app.get('/', function (req, res) {
-    res.render('checkout');
+    db.collection('students').findOne({ ID: parseInt(2060) }, function (err, student) {
+        db.collection('devices').findOne({ Barcode: parseInt(student.Tbc) }, function (err, device){
+
+
+
+        res.render('checkout', {
+            pin: student.ID,
+            FName: student.First_Name,
+            LName: student.Last_Name, 
+            Grade: student.Grade_Level,
+            barcode: student.Tbc,
+            Grad: student.Sched_YearOfGraduation,
+            brand: device.Brand,
+            type: device.Type,
+            model: device.Model,
+            vendor: device.Vendor,
+            cdi: device.CDI,
+            serial: device.ServiceTag,
+            PDate: device.PurchaseDate,
+            });
+
+             
+        });
+    });
 });
 
 app.get('/damage', function (req, res) {
     res.render('damage');
+});
+
+app.post('/process', function (req, res) {
+    db.collection('students').findOne({ ID: parseInt(req.body.pin) }, function (err, student) {
+
+        db.collection('devices').findOne({ Barcode: parseInt(student.Tbc) }, function (err, device) {
+
+            res.render('process', {
+                pin: student.ID,
+                FName: student.First_Name,
+                LName: student.Last_Name,
+                Grade: student.Grade_Level,
+                Grad: student.Sched_YearOfGraduation,
+                img: "img/" + student.ID + ".jpg",
+                barcode: student.Tbc,
+                brand: device.Brand,
+                type: device.Type,
+                model: device.Model,
+                vendor: device.Vendor,
+                cdi: device.CDI,
+                serial: device.ServiceTag,
+                PDate: device.PurchaseDate,
+            });
+        });
+    });
 });
 
 app.post('/charger', function (req, res) {
@@ -79,30 +127,8 @@ app.post('/chromebook', function (req, res) {
     res.render('checkout');
 });
 
-
-app.post('/process', function (req, res) {
-    db.collection('students').findOne({ ID: parseInt(req.body.pin) }, function (err, student) {
-
-        db.collection('devices').findOne({ Barcode: parseInt(student.Tbc) }, function (err, device) {
-
-            res.render('process', {
-                pin: student.ID,
-                FName: student.First_Name,
-                LName: student.Last_Name,
-                Grade: student.Grade_Level,
-                Grad: student.Sched_YearOfGraduation,
-                img: "img/" + student.ID + ".jpg",
-                barcode: student.Tbc,
-                brand: device.Brand,
-                type: device.Type,
-                model: device.Model,
-                vendor: device.Vendor,
-                cdi: device.CDI,
-                serial: device.ServiceTag,
-                PDate: device.PurchaseDate,
-            });
-        });
-    });
+app.post('/repair', function (req, res) {
+    res.render('repair');
 });
 
 // 404 page
