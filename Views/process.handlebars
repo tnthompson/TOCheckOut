@@ -18,9 +18,9 @@
 
         <button type ="submit" class="button">Chromebook</button>
 
-        <div class="barcode">
+        <div class="loaner">
             <label for="usr">Loaner Barcode:</label>
-            <input name="barcode" type="text" class="form-control" id="usr">
+            <input name="loaner" type="text" class="form-control" id="usr">
         </div>
 
 
@@ -37,12 +37,16 @@
             }
         </script>
         }}
+        
     </form>
 
     <form role="form"
             action="/repair" method="POST">
         <input type="hidden" name="pin" value="{{pin}}"/>
         <input type="hidden" name="model" value="{{model}}"/>
+        <input type="hidden" name="barcode" value="{{barcode}}"/>
+        <input type="hidden" name="FName" value="{{FName}}"/>
+        <input type="hidden" name="LName" value="{{LName}}"/>
 
         <button type="submit" value="submit" class="button">Repair</button>
     </form>
@@ -97,8 +101,8 @@
         font-size: 20px;
         background-color: lightgray;
     }
-
 </style>
+
 <table id="studentInfo">
     <tr>
         <th>STUDENT INFORMATION</th>
@@ -119,7 +123,6 @@
         <td><strong>Lunch Code:</strong> {{pin}}</td>
     </tr>
 </table>
-
 
 
 <table id="computerInfo">
@@ -175,3 +178,53 @@
         background-color: lightgray;
     }
 </style>
+
+
+<style>
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+
+tr:nth-child(even) {
+    background-color: #dddddd;
+}
+</style>
+
+<table>
+  <tr>
+    <th>Type</th>
+    <th>Damages</th>
+    <th>Date</th>
+    <th>Date Returned</th>
+    <th>Student Responsibility</th>
+  </tr>
+  {{#each Activities}}
+  <tr>
+    <td>{{this.Type}}</td>
+    <td>{{#if Damages}}
+        {{this.Damages}}
+        {{else}}
+        <h8>None</h8>
+        {{/if}}</td>
+    <td>{{this.Date}}</td>
+    <td>{{#if DateReturned}}
+        {{this.DateReturned}}
+        {{else}}
+        <h8>Not</h8>
+        {{/if}}</td>
+    <td>{{#if StudRes}}
+        {{this.StudRes}}
+        {{else}}
+        <h8>False</h8>
+        {{/if}}</td>
+  </tr>
+  {{/each}}
+ </table>
