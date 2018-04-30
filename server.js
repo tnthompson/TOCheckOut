@@ -22,6 +22,9 @@ var handlebars = require('express-handlebars').create({
     }
 });
 
+//var HandlebarsIntl = require('handlebars-intl');
+//HandlebarsIntl.registerWith(handlebars);
+
 app.engine('handlebars', handlebars.engine);
 app.set('view engine', 'handlebars');
 
@@ -67,6 +70,7 @@ app.post('/process', function (req, res) {
                 cdi: device.CDI,
                 serial: device.ServiceTag,
                 PDate: device.PurchaseDate,
+                Activities: student.Activities
             });
         });
     });
@@ -77,7 +81,7 @@ app.post('/charger', function (req, res) {
     db.collection('students').findAndModify({ "ID": parseInt(req.body.pin) },
         [['_id', 'asc']], {
                 $addToSet: {
-                    Activities: { Date: new Date(), Model: (req.body.model), Type: "Charger",  DateReturn: "", Returned : false }
+                    Activities: { Date: new Date(), Model: (req.body.model), Type:"Charger", Barcode: (req.body.barcode), Description: (req.body.report), Damages: (req.body.damages), StudRes: (req.body.StudRes), Loaner:(req.body.loaner), DateReturn: "", Returned: false }
                 }
             
         }, { upsert: 1 },
@@ -97,7 +101,7 @@ app.post('/chromebook', function (req, res) {
     db.collection('students').findAndModify({ "ID": parseInt(req.body.pin) },
         [['_id', 'asc']], {
             $addToSet: {
-                Activities: { Date: new Date(), Model: (req.body.model), Type: "Chromebook", Loaner: (req.body.loaner), DateReturn: "", Returned: false }
+                Activities: { Date: new Date(), Model: (req.body.model), Type: "Chromebook", Barcode: (req.body.barcode), Description: (req.body.report), Damages: (req.body.damages), StudRes: (req.body.StudRes), Loaner:(req.body.loaner), DateReturn: "", Returned: false }
             }
 
         }, { upsert: 1 },
@@ -127,7 +131,7 @@ app.post('/repair2', function(req, res) {
     db.collection('students').findAndModify({ "ID": parseInt(req.body.pin) },
         [['_id', 'asc']], {
             $addToSet: {
-                Activities: { Date: new Date(), Model: (req.body.model), Barcode: (req.body.barcode), Description: (req.body.report), Damages: (req.body.damages), StudRes: (req.body.StudRes), Loaner:(req.body.loaner), DateReturn: "", Returned: false }
+                Activities: { Date: new Date(), Model: (req.body.model), Type: "Repair", Barcode: (req.body.barcode), Description: (req.body.report), Damages: (req.body.damages), StudRes: (req.body.StudRes), Loaner:(req.body.loaner), DateReturn: "", Returned: false }
             }
 
         }, { upsert: 1 },
