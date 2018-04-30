@@ -11,7 +11,8 @@
     "express-handlebars": "^3.0.0",
     "handlebars-intl": "^1.1.2",
     "jquery-file-upload-middleware": "^0.1.8",
-    "mongodb": "^3.0.7"
+    "mongodb": "^3.0.7",
+    "nodemon": "^1.17.3"
   },
   "devDependencies": {
     "grunt": "^1.0.2",

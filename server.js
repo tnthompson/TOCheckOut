@@ -35,7 +35,30 @@ app.use(express.static(__dirname + '/public'));
 app.use(require('body-parser')());
 
 app.get('/', function (req, res) {
-    res.render('checkout');
+    db.collection('students').findOne({ ID: parseInt(2060) }, function (err, student) {
+        db.collection('devices').findOne({ Barcode: parseInt(student.Tbc) }, function (err, device){
+
+
+
+        res.render('checkout', {
+            pin: student.ID,
+            FName: student.First_Name,
+            LName: student.Last_Name, 
+            Grade: student.Grade_Level,
+            barcode: student.Tbc,
+            Grad: student.Sched_YearOfGraduation,
+            brand: device.Brand,
+            type: device.Type,
+            model: device.Model,
+            vendor: device.Vendor,
+            cdi: device.CDI,
+            serial: device.ServiceTag,
+            PDate: device.PurchaseDate,
+            });
+
+             
+        });
+    });
 });
 
 app.get('/damage', function (req, res) {

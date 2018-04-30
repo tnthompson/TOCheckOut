@@ -1,92 +1,7 @@
-﻿<style>
-    html {
-        red;
-    }
-    body {
-        font: 300 18px/1.6 "Source Sans Pro",sans-serif;
-        margin: 0;
-        padding: 10px;
-        text-align: center;
-        background-color: none
-    }
-
-    h1 {
-        font-weight: 300;
-        margin: 0;
-    }
-
-    button {
-        border: 0;
-        color: #6cacc5;
-        cursor: pointer;
-        float: left;
-        font: inherit;
-        margin: 0.25em;  
-        background: #201e40;
-    }
-
-    .reset {
-        background: rgba(201,120,116,.28);
-        color: #c97874;
-        font-weight: 400;
-        margin-left: -77px;
-        padding: 0.5em 1em;
-        position: absolute;
-        top: -20em;
-        left: 50%;
-        width: auto;
-        height: auto;
-        &:hover
-
-    {
-        background: #c97874;
-        color: #100a1c;
-    }
-
-    /* When button is revealed */
-    &.show {
-        top: 20em;
-        animation: fadein 4s;
-    }
-
-    }
-
-    .num {
-        border: ridge;
-        color: white;
-        padding: 15px 40px;
-        text-align: center;
-        display: inline-block;
-        font-size: 30px;
-    }
-
-    .go {
-        border: ridge;
-        color: white;
-        padding: 15px 40px;
-        text-align: center;
-        display: inline-block;
-        font-size: 30px;
-        margin-top: 10px;
-    }
-
-    .clear {
-        border: ridge;
-        color: white;
-        padding: 15px 40px;
-        text-align: center;
-        display: inline-block;
-        font-size: 30px;
-    }
-
-    .Lunchcode {
-        text-align: left;
-    }
-
-</style>
-
-<h1>Who are you? </h1>
-
+﻿
+<div class="row">
+            <div class="col">
+    <h1>Who are you?</h1>
 <form class="form-horizontal" role="form"
       action="/process?" method="POST">
 
@@ -98,25 +13,88 @@
     <div class="col"><button type="submit" class="go">Go</button></div>
 
 </form>
-    <div class="container">
-        <div class="row">
-            <div class="col"><button class="num" data-num="7">7</button></div>
-            <div class="col"><button class="num" data-num="8">8</button></div>
-            <div class="col"><button class="num" data-num="9">9</button></div>
-            <div class="w-100"></div>
-            <div class="col"><button class="num" data-num="4">4</button></div>
-            <div class="col"><button class="num" data-num="5">5</button></div>
-            <div class="col"><button class="num" data-num="6">6</button></div>
-            <div class="w-100"></div>
-            <div class="col"><button class="num" data-num="1">1</button></div>
-            <div class="col"><button class="num" data-num="2">2</button></div>
-            <div class="col"><button class="num" data-num="3">3</button></div>
-            <div class="w-100"></div>
-            <div class="col"><button id="clear" class="clear">C</button></div>
-            <div class="col"><button class="num" data-num="0">0</button></div>
-        </div>
+    <div class="col">
+    <div id="container">
+        <ul id="keyboard">
+
+            <li class="letter num" data-num="1">1</li>
+            <li class="letter num" data-num="2">2</li>
+            <li class="letter num" data-num="3">3</li>
+            <li class="letter clear1 num" data-num="4">4</li>
+            <li class="letter num" data-num="5">5</li>
+            <li class="letter num" data-num="6">6</li>
+
+            <li class="letter clear1 num" data-num="7">7</li>
+            <li class="letter num" data-num="8">8</li>
+            <li class="letter num" data-num="9">9</li>
+            <li class="letter num" data-num="0">0</li>
+            {{!-- <li class="return num" type="submit">return</li> --}}
+        </ul>
+            </div>
     </div>
 
+  
+ <div class="col">
+    <div id="outer">
+        <table id="postIt">
+    <tr>
+        <th>STUDENT INFORMATION</th>
+    </tr>
+    <tr>
+        <td><strong>First Name:</strong> {{FName}}</td>
+    </tr>
+    <tr>
+        <td><strong>Last Name:</strong> {{LName}}</td>
+    </tr>
+
+   
+</table>
+</div>
+<div id="floatRight">
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+more info
+</button>
+
+    <!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Loaner Information</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+          <table>
+         <tr>
+        <td><strong>Grade:</strong>{{Grade}}</td>
+    </tr>
+    <tr>
+        <td><strong>Graudation Year:</strong> {{Grad}}</td>
+    </tr>
+    <tr>
+        <td><strong>Lunch Code:</strong> {{pin}}</td>
+    </tr>
+   <tr>
+        <td><strong>CDI Number: </strong> {{cdi}}</td>
+    </tr>
+    <tr>
+        <td><strong>Serial Number:</strong> {{serial}}</td>
+    </tr>
+    </table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+                               </div>
+                          </div>
+                     </div>
+                </div>
+            </div>
+        </div>
+    
 <script>
     (function () {
         "use strict";
@@ -192,5 +170,6 @@
 
         // Add click event to clear button
         el("#clear").onclick = clearAll;
+   
     }());
 </script>
