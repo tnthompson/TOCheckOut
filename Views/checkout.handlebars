@@ -1,18 +1,15 @@
-﻿<div class="row">
-            <div class="col">
-    <h1>Who are you?</h1>
+<h1 id="responsible">Next time, be responsible</h1>
+<div class="row">
+        <div class="col-md-4">
+
 <form class="form-horizontal" role="form"
       action="/process?" method="POST">
 
     <div class="Lunchcode">
-        <label for="usr">Lunch Code:</label>
-        <input name="pin" type="text" class="form-control" id="usr">
+        <label for="usr">LUNCH CODE:</label>
+        <input name="pin" type="text" class="form-control" id="usr" maxlength="4" pattern="\d{4}" required/>
+        {{!-- <input type="text"  name="pin"  maxlength="4" id="pin" pattern="\d{4}" class="form-control" id="usr" required/> --}}
     </div>
-
-    <div class="col"><button type="submit" class="go">Go</button></div>
-
-</form>
-    <div class="col">
     <div id="container">
         <ul id="keyboard">
 
@@ -27,36 +24,41 @@
             <li class="letter num" data-num="8">8</li>
             <li class="letter num" data-num="9">9</li>
             <li class="letter num" data-num="0">0</li>
-            {{!-- <li class="return num" type="submit">return</li> --}}
-        </ul>
-            </div>
+            <li class="letter num" id="clear">C</li>
+            <button  type="submit">GO</button>
+        </ul>     
+     </div>
     </div>
-
+</form>
   
- <div class="col">
+ <div class="col-md-8">
     <div id="outer">
         <table id="postIt">
+          
     <tr>
-        <th>STUDENT INFORMATION</th>
-    </tr>
+        <th id="title">LOANER INFORMATION</th>
+    </tr> 
+    {{#each studentlist}} 
     <tr>
-        <td><strong>First Name:</strong> {{FName}}</td>
-    </tr>
-    <tr>
-        <td><strong>Last Name:</strong> {{LName}}</td>
-    </tr>
+        <td><strong>First Name:</strong> {{this.First_Name}}</td>
+        <td><strong>Last Name:</strong> {{this.Last_Name}}</td>
+         
 
-   
-</table>
-</div>
-<div id="floatRight">
+     <td><div id="floatRight">
 <!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-more info
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#Modal{{this.ID}}" id="hey">More info
 </button>
+</div>
+</td>
+    </tr>
 
+{{/each}}
+</table>
+ 
+</div>
+     {{#each studentlist}}     
     <!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="Modal{{this.ID}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -67,14 +69,17 @@ more info
       </div>
       <div class="modal-body">
           <table>
+    <tr>
+        <td><strong>Name:</strong>{{this.First_Name}} {{this.Last_Name}}</td>
+    </tr>
          <tr>
-        <td><strong>Grade:</strong>{{Grade}}</td>
+        <td><strong>Grade:</strong>{{this.Grade_Level}}</td>
     </tr>
     <tr>
-        <td><strong>Graudation Year:</strong> {{Grad}}</td>
+        <td><strong>Graudation Year:</strong> {{this.Sched_YearOfGraduation}}</td>
     </tr>
     <tr>
-        <td><strong>Lunch Code:</strong> {{pin}}</td>
+        <td><strong>Lunch Code:</strong> {{this.ID}}</td>
     </tr>
    <tr>
         <td><strong>CDI Number: </strong> {{cdi}}</td>
@@ -85,14 +90,15 @@ more info
     </table>
       </div>
       <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Return</button>
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+        
                                </div>
                           </div>
                      </div>
                 </div>
-            </div>
-        </div>
+            {{/each}}
+                         
     
 <script>
     (function () {
