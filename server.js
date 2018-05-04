@@ -22,6 +22,9 @@ var handlebars = require('express-handlebars').create({
     }
 });
 
+//var HandlebarsIntl = require('handlebars-intl');
+//HandlebarsIntl.registerWith(handlebars);
+
 app.engine('handlebars', handlebars.engine);
 app.set('view engine', 'handlebars');
 
@@ -63,6 +66,14 @@ app.get('/damage', function (req, res) {
     res.render('damage');
 });
 
+app.get('/test', function (req, res){
+    db.collection('students').find({ "Activities.Returned": { $exists: true } } , function (err, student) {
+       console.log(student);
+        res.render('test',{
+            student:student
+        });
+    });
+});
 app.post('/process', function (req, res) {
     db.collection('students').findOne({ ID: parseInt(req.body.pin) }, function (err, student) {
 
@@ -83,6 +94,7 @@ app.post('/process', function (req, res) {
                 cdi: device.CDI,
                 serial: device.ServiceTag,
                 PDate: device.PurchaseDate,
+                Activities: student.Activities
             });
         });
     });
@@ -90,10 +102,11 @@ app.post('/process', function (req, res) {
 
 app.post('/charger', function (req, res) {
     console.log(req.body.pin);
+    var d = new Date();
     db.collection('students').findAndModify({ "ID": parseInt(req.body.pin) },
         [['_id', 'asc']], {
                 $addToSet: {
-                    Activities: { Date: new Date(), Description: (req.body.model), DateReturn: "", Returned : false }
+                    Activities: { aID: d.toISOString() , Date: d, Model: (req.body.model), Type:"Charger", Barcode: (req.body.barcode), Description: (req.body.report), Damages: (req.body.damages), StudRes: (req.body.StudRes), Loaner:(req.body.loaner), DateReturn: "", Returned: false }
                 }
             
         }, { upsert: 1 },
@@ -110,10 +123,11 @@ app.post('/charger', function (req, res) {
 
 app.post('/chromebook', function (req, res) {
     console.log(req.body.pin);
+    var d = new Date();
     db.collection('students').findAndModify({ "ID": parseInt(req.body.pin) },
         [['_id', 'asc']], {
             $addToSet: {
-                Activities: { Date: new Date(), Description: (req.body.model), Barcode: (req.body.barcode),  DateReturn: "", Returned: false }
+                Activities: { aID: d.toISOString() ,Date: d, Model: (req.body.model), Type: "Chromebook", Barcode: (req.body.barcode), Description: (req.body.report), Damages: (req.body.damages), StudRes: (req.body.StudRes), Loaner:(req.body.loaner), DateReturn: "", Returned: false }
             }
 
         }, { upsert: 1 },
@@ -129,8 +143,42 @@ app.post('/chromebook', function (req, res) {
 });
 
 app.post('/repair', function (req, res) {
-    res.render('repair');
+    res.render('repair' , {
+        pin: req.body.pin,
+        FName: req.body.First_Name,
+        LName: req.body.Last_Name,
+        barcode: req.body.barcode,
+        model: req.body.model
+    });
 });
+
+app.post('/repair2', function(req, res) {
+    console.log(req.body.pin)
+    var d = new Date();
+    db.collection('students').findAndModify({ "ID": parseInt(req.body.pin) },
+        [['_id', 'asc']], {
+            $addToSet: {
+                Activities: {Date: new Date(), aID: d.toISOString() ,Date: d, Model: (req.body.model), Type: "Repair", Barcode: (req.body.barcode), Description: (req.body.report), Damages: (req.body.damages), StudRes: (req.body.StudRes), Loaner:(req.body.loaner), DateReturn: "", Returned: false }
+            }
+
+        }, { upsert: 1 },
+        function (err, thing) {
+            if (err) {
+                console.log(err);
+            } else {
+                console.log(thing);
+            }
+        });
+    res.render('checkout') 
+});
+
+app.post("/return", function (req,res){
+
+    console.log(req.body.aID);
+    db.collection('students').updateOne({"Activities":{$elemMatch: {"Returned": false, "aID":req.body.aID}}},{$set: {"Activities.$.Returned" : true, "Activities.$.DateReturned": new Date()}})
+res.render('checkout') 
+});
+
 
 // 404 page
 app.use(function (req, res, next) {
