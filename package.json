@@ -8,7 +8,9 @@
   },
   "dependencies": {
     "express": "^4.16.2",
+    "express-flash-notification": "^0.5.0",
     "express-handlebars": "^3.0.0",
+    "express-session": "^1.15.6",
     "handlebars-intl": "^1.1.2",
     "jquery-file-upload-middleware": "^0.1.8",
     "mongodb": "^3.0.7",

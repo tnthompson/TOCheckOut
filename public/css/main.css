@@ -127,3 +127,28 @@ td, th {
     text-align:center;
     text-transform: uppercase;
 }
+
+.alert {
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+  }
+  
+  .alert-success {
+    color: #FFF;
+    background-color: #19B698;
+    border-color: #0FAC8E;
+  }
+  
+  .alert-info {
+    color: #FFF;
+    background-color: #4AA3DF;
+    border-color: #4099D5;
+  }
+  
+  .alert-danger {
+    color: #FFF;
+    background-color: #EA6153;
+    border-color: #E05749;
+  }

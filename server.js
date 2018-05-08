@@ -1,5 +1,7 @@
 var express = require('express');
 var app = express();
+const flash = require('express-flash-notification');
+const session = require('express-session');
 
 var db;
 var MongoClient = require('mongodb').MongoClient,
@@ -28,11 +30,52 @@ var handlebars = require('express-handlebars').create({
 app.engine('handlebars', handlebars.engine);
 app.set('view engine', 'handlebars');
 
+
+
 app.set('port', process.env.PORT || 2000);
 
 app.use(express.static(__dirname + '/public'));
 
 app.use(require('body-parser')());
+
+app.use(session({
+    name: 'example',
+    secret: 'shuush',
+    resave: false,
+    saveUninitialized: true,
+    cookie: {
+      path: '/',
+      httpOnly: true,
+      secure: false,
+      expires: new Date('Monday, 18 January 2028')
+    },
+  }))
+  const flashNotificationOptions = {
+    beforeSingleRender: function(item, callback) {
+      if (item.type) {
+        switch(item.type) {
+          case 'GOOD':
+            item.type = 'Success';
+            item.alertClass = 'alert-success';
+            break;
+          case 'OK':
+            item.type = 'Info';
+            item.alertClass = 'alert-info';
+            break;
+          case 'BAD':
+            item.type = 'Error';
+            item.alertClass = 'alert-danger';
+            break;
+        }
+      }
+      callback(null, item);
+    }
+  };
+  
+  // Flash Notification Middleware Initialization
+  app.use(flash(app, flashNotificationOptions))
+
+app.use(flash(app));
 
 app.get('/', function (req, res) {
     db.collection('students').find( {}).toArray(function (err, student) {
@@ -62,10 +105,6 @@ app.get('/', function (req, res) {
     });
 });
 
-app.get('/damage', function (req, res) {
-    res.render('damage');
-});
-
 app.get('/test', function (req, res){
     db.collection('students').find({ "Activities.Returned": { $exists: true } } , function (err, student) {
        console.log(student);
@@ -76,6 +115,8 @@ app.get('/test', function (req, res){
 });
 app.post('/process', function (req, res) {
     db.collection('students').findOne({ ID: parseInt(req.body.pin) }, function (err, student) {
+
+        if (student != null){
 
         db.collection('devices').findOne({ Barcode: parseInt(student.Tbc) }, function (err, device) {
 
@@ -97,6 +138,11 @@ app.post('/process', function (req, res) {
                 Activities: student.Activities
             });
         });
+
+    } else {
+        req.flash("BAD", "No User Found", "/");
+    }
+
     });
 });
 
@@ -106,7 +152,7 @@ app.post('/charger', function (req, res) {
     db.collection('students').findAndModify({ "ID": parseInt(req.body.pin) },
         [['_id', 'asc']], {
                 $addToSet: {
-                    Activities: { aID: d.toISOString() , Date: d, Model: (req.body.model), Type:"Charger", Barcode: (req.body.barcode), Description: (req.body.report), Damages: (req.body.damages), StudRes: (req.body.StudRes), Loaner:(req.body.loaner), DateReturn: "", Returned: false }
+                    Activities: { aID: d.toISOString() , Date: d, Model: (req.body.model), Type:"Charger", Barcode: (req.body.barcode), Description: (req.body.report), Damages: (req.body.damages), StudRes: (req.body.StudRes), Loaner:(req.body.loaner),  Returned: false }
                 }
             
         }, { upsert: 1 },
@@ -118,7 +164,7 @@ app.post('/charger', function (req, res) {
             }
         });
 
-    res.render('checkout');
+        req.flash("GOOD", "Charger Loaned.", "/")
 });
 
 app.post('/chromebook', function (req, res) {
@@ -127,7 +173,7 @@ app.post('/chromebook', function (req, res) {
     db.collection('students').findAndModify({ "ID": parseInt(req.body.pin) },
         [['_id', 'asc']], {
             $addToSet: {
-                Activities: { aID: d.toISOString() ,Date: d, Model: (req.body.model), Type: "Chromebook", Barcode: (req.body.barcode), Description: (req.body.report), Damages: (req.body.damages), StudRes: (req.body.StudRes), Loaner:(req.body.loaner), DateReturn: "", Returned: false }
+                Activities: { aID: d.toISOString() ,Date: d, Model: (req.body.model), Type: "Chromebook", Barcode: (req.body.barcode), Description: (req.body.report), Damages: (req.body.damages), StudRes: (req.body.StudRes), Loaner:(req.body.loaner), Returned: false }
             }
 
         }, { upsert: 1 },
@@ -139,26 +185,40 @@ app.post('/chromebook', function (req, res) {
             }
         });
 
-    res.render('checkout');
+        db.collection('devices').findAndModify({ "Barcode": parseInt(req.body.loaner) },
+        [['_id', 'asc']], {
+                $addToSet: {
+                    Activities: { aID: d.toISOString() , Date: d, Name: (req.body.FName +" " + req.body.LName), ID: (req.body.pin), Description: (req.body.report), Damages: (req.body.damages), StudRes: (req.body.StudRes), Returned: false }
+                }
+            
+        }, { upsert: 1 },
+        function (err, thing) {
+            if (err) {
+                console.log(err);
+            } else {
+                console.log(thing);
+            }
+            });
+
+        req.flash("GOOD", "Chromebook Loaned.", "/")
 });
 
 app.post('/repair', function (req, res) {
     res.render('repair' , {
         pin: req.body.pin,
-        FName: req.body.First_Name,
-        LName: req.body.Last_Name,
+        FName: req.body.FName,
+        LName: req.body.LName,
         barcode: req.body.barcode,
         model: req.body.model
     });
 });
 
 app.post('/repair2', function(req, res) {
-    console.log(req.body.pin)
     var d = new Date();
     db.collection('students').findAndModify({ "ID": parseInt(req.body.pin) },
         [['_id', 'asc']], {
             $addToSet: {
-                Activities: {Date: new Date(), aID: d.toISOString() ,Date: d, Model: (req.body.model), Type: "Repair", Barcode: (req.body.barcode), Description: (req.body.report), Damages: (req.body.damages), StudRes: (req.body.StudRes), Loaner:(req.body.loaner), DateReturn: "", Returned: false }
+                Activities: {Date: new Date(), aID: d.toISOString() ,Date: d, Model: (req.body.model), Type: "Repair", Barcode: (req.body.barcode), Description: (req.body.report), Damages: (req.body.damages), StudRes: (req.body.StudRes), Loaner:(req.body.loaner), Returned: false }
             }
 
         }, { upsert: 1 },
@@ -169,14 +229,30 @@ app.post('/repair2', function(req, res) {
                 console.log(thing);
             }
         });
-    res.render('checkout') 
+
+        db.collection('devices').findAndModify({ "Barcode": parseInt(req.body.barcode) },
+        [['_id', 'asc']], {
+                $addToSet: {
+                    Activities: { aID: d.toISOString() , Date: d, Name: (req.body.FName + " " +  req.body.LName), ID: (req.body.pin), Description: (req.body.report), Damages: (req.body.damages), StudRes: (req.body.StudRes), Returned: false }
+                }
+            
+        }, { upsert: 1 },
+        function (err, thing) {
+            if (err) {
+                console.log(err);
+            } else {
+                console.log(thing);
+            }
+            });
+
+        req.flash("GOOD", "Repair Submited.", "/") 
 });
 
 app.post("/return", function (req,res){
 
     console.log(req.body.aID);
     db.collection('students').updateOne({"Activities":{$elemMatch: {"Returned": false, "aID":req.body.aID}}},{$set: {"Activities.$.Returned" : true, "Activities.$.DateReturned": new Date()}})
-res.render('checkout') 
+    req.flash("GOOD", "Loaner returned.", "/")
 });
 
 
