@@ -77,31 +77,16 @@ app.use(session({
 
 app.use(flash(app));
 
+app.get("/devices", function(req, res){
+    res.render("devices")
+})
+
 app.get('/', function (req, res) {
-    db.collection('students').find( {}).toArray(function (err, student) {
-        // db.collection('devices').findOne({ Barcode: parseInt(student.Tbc) }, function (err, device){
-
-
+    db.collection('students').find({"Activities.Returned": false}).toArray(function (err, student) {
 
         res.render('checkout', {
-            'studentlist':student
-            // pin: student.ID,
-            // FName: student.First_Name,
-            // LName: student.Last_Name, 
-            // Grade: student.Grade_Level,
-            // barcode: student.Tbc,
-            // Grad: student.Sched_YearOfGraduation,
-            // brand: device.Brand,
-            // type: device.Type,
-            // model: device.Model,
-            // vendor: device.Vendor,
-            // cdi: device.CDI,
-            // serial: device.ServiceTag,
-            // PDate: device.PurchaseDate,
+            'studentlist':student,
             });
-
-             
-        // });
     });
 });
 
@@ -113,6 +98,7 @@ app.get('/test', function (req, res){
         });
     });
 });
+
 app.post('/process', function (req, res) {
     db.collection('students').findOne({ ID: parseInt(req.body.pin) }, function (err, student) {
 
