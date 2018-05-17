@@ -7,8 +7,9 @@
 
    
     body {  
-    font: 71%/1.5 Verdana, Sans-Serif;  
-    background:#97a1b2;  
+    font: 71%/1.5 Roboto;  
+    background:#474b4f; 
+    color: black;
     
     }  
     #container {  
@@ -84,15 +85,26 @@
     padding-top: 33px;
 }
 label{
-    font-size: 14px;
+    font-size: 18px;
+    color: white;
 }
+
+.form-control{
+    font-size: 16px !important;
+    color: white !important;
+}
+
 #hey{
     margin-top: 10px;
-    background: white;
-    color:black;
+    background: #b1b1b1 !important;
+    color: black !important;
     border: none;
-   
+    width: 100% !important;
+    font-size: 18px;
+    padding: 25px;
+    text-align: center;
 }
+
 #postIt th{
     padding-top: 15px;
     padding-bottom: 15px;
@@ -126,6 +138,9 @@ td, th {
 #responsible{
     text-align:center;
     text-transform: uppercase;
+    padding-top: 125px;
+    padding-bottom: 50px;
+    color: white;
 }
 
 .alert {
@@ -152,3 +167,49 @@ td, th {
     background-color: #EA6153;
     border-color: #E05749;
   }
+
+
+    i {
+        padding-right: 100px;
+    }
+
+    .btn-group {
+        padding-top: 100px;
+        padding-bottom: 15px;
+        margin-right: 10px;
+        display: inline-block;
+        margin-left: 100px;
+        width: 33%;
+       
+    }
+
+    .btn-primary {
+        background-color: #e5e5e5 !important;
+        display: block;
+        padding: 25px;
+        padding-right: 100px;
+        cursor: pointer;
+        width: 200% !important;
+        height: 2000% !important;
+        text-align: center;
+        font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+        font-size: 22px;
+        letter-spacing: 1px;
+        color: #212121 !important;
+        box-shadow: 0 2px 2px 0 rgba(17, 17, 17, 0.905), 0 3px 1px -2px rgba(17, 17, 17, 0.871), 0 1px 5px 0 rgba(17, 17, 17, 0.878) !important;
+    }
+
+    .btn-group .button:hover {
+        background-color: #212121 !important;
+        color: #e5e5e5 !important;
+    }
+
+    .btn .material-icons {
+        font-size: 35px !important;
+    }
+
+    img {
+        padding-top: 65px;
+    }
+
+   
