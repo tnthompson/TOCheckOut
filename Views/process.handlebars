@@ -65,6 +65,29 @@
 
         <button type="submit" value="submit" class="button">Repair</button>
     </form>
+
+    <form role="form"
+            action="/checkIn" method="POST">
+        <input type="hidden" name="pin" value="{{pin}}"/>
+        <input type="hidden" name="model" value="{{model}}"/>
+        <input type="hidden" name="barcode" value="{{barcode}}"/>
+        <input type="hidden" name="FName" value="{{FName}}"/>
+        <input type="hidden" name="LName" value="{{LName}}"/>
+        <input type="hidden" name="serial" value="{{serial}}"/>
+
+        <button type="submit" value="submit" class="button">Check In</button>
+    </form>
+
+    <form role="form"
+            action="/checkOut" method="POST">
+        <input type="hidden" name="pin" value="{{pin}}"/>
+        <input type="hidden" name="model" value="{{model}}"/>
+        <input type="hidden" name="barcode" value="{{barcode}}"/>
+        <input type="hidden" name="FName" value="{{FName}}"/>
+        <input type="hidden" name="LName" value="{{LName}}"/>
+
+        <button type="submit" value="submit" class="button">Check Out</button>
+    </form>
     
 </div>
 
