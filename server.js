@@ -79,7 +79,7 @@ app.use(flash(app));
 
 app.get('/', function (req, res) {
     db.collection('students').find({"Activities.Returned":{$eq: false, $exists: true}}).toArray(function (err, student) {
-
+console.log(student);
         res.render('checkout', {
             'studentlist':student,
             });
@@ -119,6 +119,8 @@ app.post('/process', function (req, res) {
                 cdi: device.CDI,
                 serial: device.ServiceTag,
                 PDate: device.PurchaseDate,
+                SNumber: student.Student_Number,
+                CheckedOut: student.CheckedOut,
                 Activities: student.Activities
             });
         });
@@ -217,7 +219,7 @@ app.post('/repair2', function(req, res) {
         db.collection('devices').findAndModify({ "Barcode": parseInt(req.body.barcode) },
         [['_id', 'asc']], {
                 $addToSet: {
-                    Activities: { aID: d.toISOString() , Date: d, Name: (req.body.FName + " " +  req.body.LName), ID: (req.body.pin), Description: (req.body.report), Damages: (req.body.damages), StudRes: (req.body.StudRes), Returned: false }
+                    Activities: { aID: d.toISOString() , Date: d, Type: "Repair", Name: (req.body.FName + " " +  req.body.LName), ID: (req.body.pin), Description: (req.body.report), Damages: (req.body.damages), StudRes: (req.body.StudRes), Returned: false }
                 }
             
         }, { upsert: 1 },
@@ -270,7 +272,7 @@ app.post('/checkIn2', function(req, res) {
     db.collection('devices').findAndModify({ "Barcode": parseInt(req.body.barcode) },
         [['_id', 'asc']], {
             $addToSet: {
-                Activities: {Date: new Date(), aID: d.toISOString() ,Date: d, Model: (req.body.model), Type: "Check-In", Barcode: (req.body.barcode), Description: (req.body.report), Damages: (req.body.damages), Username: (req.body.username), Charger: (req.body.charger), Senior_Purchase:(req.body.SPurchase)}
+                Activities: {Date: new Date(), aID: d.toISOString() ,Date: d, Name: (req.body.FName + " " +  req.body.LName), Model: (req.body.model), Type: "Check-In", Barcode: (req.body.barcode), Description: (req.body.report), Damages: (req.body.damages), Username: (req.body.username), Charger: (req.body.charger), Senior_Purchase:(req.body.SPurchase)}
             }
 
         }, { upsert: 1 },
@@ -278,14 +280,18 @@ app.post('/checkIn2', function(req, res) {
             if (err) {
                 console.log(err);
             } else {
-                console.log(thing);
+                //console.log(thing);
             }
         });    
 
+        db.collection('students').updateOne({ "ID": parseInt(req.body.pin) },
+        {$set: {CheckedOut: false}
+    
+        });
         db.collection('students').findAndModify({ "ID": parseInt(req.body.pin) },
         [['_id', 'asc']], {
             $addToSet: {
-                Activities: {Date: new Date(), aID: d.toISOString() ,Date: d, Model: (req.body.model), Type: "Check-In", Barcode: (req.body.barcode), Description: (req.body.report), Damages: (req.body.damages), Username: (req.body.username), Charger: (req.body.charger), Senior_Purchase:(req.body.SPurchase)}
+                Activities: {Date: new Date(), aID: d.toISOString() ,Date: d, Model: (req.body.model), Type: "Check-In", Barcode: (req.body.barcode), Description: (req.body.report), Damages: (req.body.damages), Username: (req.body.username), Charger: (req.body.charger), Senior_Purchase:(req.body.SPurchase), Returned: true}
             }
 
         }, { upsert: 1 },
@@ -293,7 +299,7 @@ app.post('/checkIn2', function(req, res) {
             if (err) {
                 console.log(err);
             } else {
-                console.log(thing);
+                //console.log(thing);
             }
         });
         req.flash("GOOD", "Device Checked In.", "/") 
@@ -301,10 +307,14 @@ app.post('/checkIn2', function(req, res) {
 
 app.post('/checkOut', function (req, res) {
     var d = new Date();
+    db.collection('students').updateOne({ "ID": parseInt(req.body.pin) },
+    {$set: {CheckedOut: true}
+
+    });
     db.collection('students').findAndModify({ "ID": parseInt(req.body.pin) },
         [['_id', 'asc']], {
             $addToSet: {
-                Activities: {Date: new Date(), aID: d.toISOString() ,Date: d, Model: (req.body.model), Type: "Checkout", Barcode: (req.body.barcode)}
+                Activities: {Date: new Date(), aID: d.toISOString() ,Date: d, Model: (req.body.model), Type: "Checkout", Barcode: (req.body.barcode), Returned: true }
             }
 
         }, { upsert: 1 },
@@ -315,9 +325,9 @@ app.post('/checkOut', function (req, res) {
                 console.log(thing);
             }
         });
-
+//console.log(req.body.SNumber);
     db.collection('devices').updateOne({ "Barcode": parseInt(req.body.barcode) },
-    {$set: {StudentName: (req.body.FName + " " + req.body.LName), ID: (req.body.pin)}
+    {$set: {StudentName: (req.body.FName + " " + req.body.LName), ID: (req.body.pin), StudentNumber: (req.body.SNumber)}
 
     });
 
@@ -377,7 +387,8 @@ app.post('/deviceInfo', function (req, res) {
                 sold: device.SoldTo,
                 SName: device.StudentName,
                 id: device.ID,
-                SNumber: device.StudentNumber               
+                SNumber: device.StudentNumber, 
+                Activities: device.Activities   
             });
 
     } else {
