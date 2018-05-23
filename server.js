@@ -97,6 +97,15 @@ app.get('/test', function (req, res){
 });
 */
 
+app.get('/summary', function(req, res){
+    db.collection('students').find({CheckedOut: false}).toArray(function (err, student) {
+
+    res.render('summary', {
+        'studentlist':student,
+    });
+    });
+});
+
 app.post('/process', function (req, res) {
     db.collection('students').findOne({ ID: parseInt(req.body.pin) }, function (err, student) {
 
