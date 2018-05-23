@@ -1,0 +1,84 @@
+<style>
+    .form-control {
+    width: 100%;
+    height: 150px;
+    padding: 12px 20px;
+    box-sizing: border-box;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    background-color: #f8f8f8;
+    resize: none;
+}
+</style>
+
+<form role="form"
+        action="/checkIn2" method="POST">
+    <input type="hidden" name="pin" value="{{pin}}"/>
+    <input type="hidden" name="barcode" value="{{barcode}}"/>
+    <input type="hidden" name="model" value="{{model}}"/>
+    <input type="hidden" name="FName" value="{{FName}}"/>
+    <input type="hidden" name="LName" value="{{LName}}"/>
+
+<br>
+
+<h4>Damages</h4>
+<div class="checkbox">
+    <label><input type="checkbox" name="damages" value="Keyboard">Keyboard</label>
+    </div>
+    <div class="checkbox">
+    <label><input type="checkbox"  name="damages" value= "Display">Display</label>
+    </div>
+    <div class="checkbox">
+    <label><input type="checkbox" name="damages" value= "Case">Case</label>
+    </div>
+    <div class="checkbox">
+    <label><input type="checkbox" name="damages" value= "Touchpad">Touchpad</label>
+    </div>
+    <div class="checkbox">
+    <label><input type="checkbox" name="damages" value= "Sound System">Sound System</label>
+    </div>
+    <div class="checkbox">
+    <label><input type="checkbox" name="damages" value= "Charger">Charger</label>
+    </div>
+    <div class="checkbox">
+    <label><input type="checkbox" name="damages" value= "Other">Other</label>
+    </div>
+    <div class="checkbox">
+    <label><input type="checkbox" name="none" value= "None">None</label>
+    </div>
+<br>
+
+<h4>Charger</h4>
+<div class="checkbox">
+    <label><input type="checkbox" name="charger" value="True">Returned</label>
+</div>
+<div class="checkbox">
+    <label><input type="checkbox"  name="charger" value= "False">Not Returned</label>
+</div>
+
+<br>
+
+<div class = "report">
+    <label for="usr">Damages, Problems, Notes:</label>
+    <input name="report"  type="text" class="form-control" id="usr">
+</div>
+
+<br>
+
+<div class = "username">
+    <label for="usr">Username:</label>
+    <input name="username"  type="text" class="form-control1" id="usr">
+</div>
+
+<br>
+
+<div class="checkbox">
+    <label><input type="checkbox"  name="SPurchase" value= "True">Senior Purchase</label>
+</div>
+
+<br>
+
+<div>
+    <button type ="submit" class="button">Submit</button>
+</div>
+</form>

@@ -1,0 +1,219 @@
+<div class="btn-group">
+
+    <form role="form"
+          action="/addDevice" method="POST">
+        <button type ="submit" class="button">Add Device</button>
+    </form>
+</div>
+
+<style>
+    .btn-group {
+        padding: 15px 32px;
+        margin-right: 10px;
+        display: inline-block;
+        margin-left: 100px;
+        width: 33%;
+       
+    }
+
+    .button {
+        background-color: #f50909;
+        display: block;
+        padding: 15px 32px;
+        cursor: pointer;
+        width: 200%;
+        text-align: center;
+        font-size: 25px;
+    }
+
+    .btn-group .button:hover {
+        background-color: #100c6d;
+        color: white;
+    }
+</style>
+
+<form role="form"
+        action="/modify" method="POST">
+    <input type="hidden" name="barcode" value="{{barcode}}"/>
+
+    <table id="computerInfo">
+        <tr>
+            <th>DEVICE INFORMATION </th>
+        </tr>
+        <tr>
+            <td><strong>Barcode:</strong>{{barcode}} </td>
+        </tr>
+        <tr>
+            <td><strong>Building: </strong> <input type="text" name="bldg" value="{{bldg}}"></td>
+        </tr>
+        <tr>
+            <td><strong>Room: </strong> <input type="text" name="room" value="{{room}}"> </td>
+        </tr>
+        <tr>
+            <td><strong>Brand:</strong> <input type="text" name="brand" value="{{brand}}"></td>
+        </tr>
+        <tr>
+            <td><strong>Type:</strong> <input type="text" name="type" value="{{type}}"></td>
+        </tr>
+        <tr>
+            <td><strong>Model: </strong> <input type="text" name="model" value="{{model}}"></td>
+        </tr>
+        <tr>
+            <td><strong>Vendor:</strong> <input type="text" name="vendor" value="{{vendor}}"></td>
+        </tr>
+        <tr>
+            <td><strong>Serial Number:</strong> <input type="text" name="serial" value="{{serial}}"></td>
+        </tr>
+        <tr>
+            <td><strong>Purchase Date:</strong> <input type="text" name="PDate" value="{{PDate}}"></td>
+        </tr>
+        <tr>
+            <td><strong>Notes: </strong> <input type="text" name="notes" value="{{notes}}"></td>
+        </tr>
+        <tr>
+            <td><strong>CDI Number: </strong> <input type="text" name="cdi" value="{{cdi}}"> </td>
+        </tr>
+        <tr>
+            <td><strong>Order:</strong> <input type="text" name="order" value="{{order}}"></td>
+        </tr>
+        <tr>
+            <td><strong>Parts Claimed: </strong> <input type="text" name="PClaimed" value="{{PClaimed}}"></td>
+        </tr>
+        <tr>
+            <td><strong>Untagged Date: </strong> <input type="text" name="UnDate" value="{{UnDate}}"></td>
+        </tr>
+        <tr>
+            <td><strong>DWS:</strong> <input type="text" name="dws" value="{{dws}}"></td>
+        </tr>
+        <tr>
+            <td><strong>Sold To:</strong> <input type="text" name="sold" value="{{sold}}"></td>
+        </tr>
+            <tr>
+            <td><strong>Student Name: </strong> <input type="text" name="SName" value="{{SName}}"></td>
+        </tr>
+        <tr>
+            <td><strong>id:</strong> <input type="text" name="id" value="{{id}}"></td>
+        </tr>
+        <tr>
+            <td><strong>Student Number:</strong> <input type="text" name="SNumber" value="{{SNumber}}"></td>
+        </tr>
+    </table>
+
+
+    <button type ="submit" class="button2">Modify</button>
+</form>
+
+{{!Device table CSS}}
+<style>
+    #computerInfo {
+        margin-top: 20px;
+        width: 50%;
+    }
+
+    #computerInfo td, #computerInfo th {
+        border: 1px solid #ddd;
+        padding: 8px;
+    }
+
+    #computerInfo th {
+        padding-top: 15px;
+        padding-bottom: 15px;
+        text-align: left;
+        background-color: white;
+        color: black;
+        font-size: 20px;
+        background-color: lightgray;
+    }
+</style>
+
+
+<style>
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+
+tr:nth-child(even) {
+    background-color: #dddddd;
+}
+</style>
+
+<table>
+    <tr>
+        <th>Type</th>
+       <th>Name</th>
+        <th>Damages</th>
+        <th>Date</th>
+        <th>Date Returned</th>
+        <th>Student Responsibility</th>
+    </tr>
+  {{#each Activities}}
+    <tr>
+        <td>{{this.Type}}</td>
+        <td>{{this.Name}}</td>
+        <td>{{#if Damages}}
+        {{this.Damages}}
+<div class="col">
+<div id="outer">
+</div>
+<div id="floatRight">
+    
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal{{this.Date}}">more info</button>
+
+    <!-- Modal -->
+<div class="modal fade" id="modal{{this.Date}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Details</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+          <table>
+         <tr>
+        <td>
+        <strong>Description: </strong>{{this.Description}}</td>
+        </tr>
+    </table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                               </div>
+                          </div>
+                     </div>
+                </div>
+            </div>
+        </div>
+
+        {{else}}
+        None
+        {{/if}}</td>
+    <td>{{this.Date}}</td>
+    <td>{{#if DateReturned}}
+        {{this.DateReturned}}
+        {{else}}
+        <form role="form" name="Return"
+                action="/return" method="POST">
+            <input type="hidden" name="aID" value= "{{this.aID}}" />
+           
+        <button type="submit" class="Return">Return</button>
+        {{/if}}</td> 
+        </form>
+    <td>{{#if StudRes}}
+        {{this.StudRes}}
+        {{else}}
+        False
+        {{/if}}</td>
+  </tr>
+  {{/each}}
+ </table>

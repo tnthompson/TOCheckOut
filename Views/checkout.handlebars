@@ -1,4 +1,4 @@
-<h1 id="responsible">Next time, be responsible</h1>
+﻿<h1 id="responsible">Next time, be responsible</h1>
 <div class="row">
         <div class="col-md-4">
 
@@ -36,33 +36,45 @@
         <table id="postIt">
           
     <tr>
-        <th id="title">LOANER INFORMATION</th>
+        <th id="title">STUDENT FIRST NAME</th>
+        <th>STUDENT LAST NAME</th>
+        <th>TYPE</th>
+        <th><div id="goats"><i class="fas fa-info-circle"></i></div></th>
     </tr> 
-    {{#each studentlist}} 
+    {{#each studentlist as |student_list|}}
     <tr>
-        <td><strong>First Name:</strong> {{this.First_Name}}</td>
-        <td><strong>Last Name:</strong> {{this.Last_Name}}</td>
-         
-
-     <td><div id="floatRight">
+        {{#each Activities}}
+        {{#unless Returned}}
+        <td> {{student_list.First_Name}}</td>
+        <td> {{student_list.Last_Name}}</td>
+        <td> {{this.Type}}</td>
+             <td><div id="floatRight">
 <!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#Modal{{this.ID}}" id="hey">More info
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#Modal{{this.aID}}" id="hey">More info
 </button>
 </div>
 </td>
     </tr>
 
+        {{/unless}}
+        {{/each}}
+         
+
+
 {{/each}}
 </table>
  
 </div>
-     {{#each studentlist}}     
+     {{#each studentlist as |student_list|}}
+        {{#each Activities}}
+        {{#unless Returned}}
+
     <!-- Modal -->
-<div class="modal fade" id="Modal{{this.ID}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="Modal{{this.aID}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Loaner Information</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Loaner/Repair Information</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -70,33 +82,60 @@
       <div class="modal-body">
           <table>
     <tr>
-        <td><strong>Name:</strong>{{this.First_Name}} {{this.Last_Name}}</td>
+        <td><strong>Date Loaned: </strong>{{this.aID}}</td>
     </tr>
          <tr>
-        <td><strong>Grade:</strong>{{this.Grade_Level}}</td>
+        <td><strong>Model: </strong>{{this.Model}}</td>
     </tr>
     <tr>
-        <td><strong>Graudation Year:</strong> {{this.Sched_YearOfGraduation}}</td>
+        <td><strong>Barcode: </strong>{{this.Barcode}}</td>
     </tr>
     <tr>
-        <td><strong>Lunch Code:</strong> {{this.ID}}</td>
+        <td><strong>Description: </strong>{{#if Description}}
+        {{this.Description}}
+        {{else}}
+        None
+        {{/if}}</td>
     </tr>
    <tr>
-        <td><strong>CDI Number: </strong> {{cdi}}</td>
+        <td><strong>Damages: </strong>{{#if Damages}}
+        {{this.Damages}}
+        {{else}}
+        None
+        {{/if}}</td>
     </tr>
     <tr>
-        <td><strong>Serial Number:</strong> {{serial}}</td>
+        <td><strong>Student Responsibility: </strong>{{#if StudRes}}
+        {{this.StudRes}}
+        {{else}}
+        False
+        {{/if}}</td>
+    </tr>
+    <tr>
+        <td><strong>Loaner Barcode: </strong>{{#if Loaner}}
+        {{this.Loaner}}
+        {{else}}
+        None
+        {{/if}}</td>
     </tr>
     </table>
       </div>
       <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Return</button>
+
+         <form role="form" name="Return"
+                action="/return" method="POST">
+            <input type="hidden" name="aID" value= "{{this.aID}}" />
+           
+        <button type="submit" class="btn btn-secondary" class="Return">Return</button>
+        </form>
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
         
                                </div>
                           </div>
                      </div>
                 </div>
+            {{/unless}}
+            {{/each}}
             {{/each}}
                          
     

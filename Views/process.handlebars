@@ -1,4 +1,4 @@
-﻿<img src={{img}} alt="Mountain View" />
+﻿<img src={{img}} alt="Student Picture" />
 
 <div class="btn-group">
 
@@ -6,6 +6,7 @@
           action="/charger" method="POST">
         <input type="hidden" name="pin" value="{{pin}}"/>
         <input type="hidden" name="model" value="{{model}}"/>
+        <input type="hidden" name="barcode" value="{{barcode}}" />
 
         <button type="submit" value="submit" class="btn btn-primary"><i class="material-icons">power</i>Charger</button>
     </form>
@@ -64,7 +65,34 @@
 
         <button type="submit" value="submit" class="btn btn-primary"><i class="material-icons">build</i>Repair</button>
     </form>
+
+{{#if CheckedOut}}
+    <form role="form"
+            action="/checkIn" method="POST">
+        <input type="hidden" name="pin" value="{{pin}}"/>
+        <input type="hidden" name="model" value="{{model}}"/>
+        <input type="hidden" name="barcode" value="{{barcode}}"/>
+        <input type="hidden" name="FName" value="{{FName}}"/>
+        <input type="hidden" name="LName" value="{{LName}}"/>
+        <input type="hidden" name="serial" value="{{serial}}"/>
+
+        <button type="submit" value="submit" class="button">Check In</button>
+    </form>
     
+{{else}}
+<form role="form"
+            action="/checkOut" method="POST">
+        <input type="hidden" name="pin" value="{{pin}}"/>
+        <input type="hidden" name="model" value="{{model}}"/>
+        <input type="hidden" name="barcode" value="{{barcode}}"/>
+        <input type="hidden" name="FName" value="{{FName}}"/>
+        <input type="hidden" name="LName" value="{{LName}}"/>
+        <input type="hidden" name="SNumber" value="{{SNumber}}"/>
+
+        <button type="submit" value="submit" class="button">Check Out</button>
+    </form>
+{{/if}}
+
 </div>
 
 

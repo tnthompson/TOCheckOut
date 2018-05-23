@@ -1,0 +1,111 @@
+﻿<h1 id="responsible">Next time, be responsible</h1>
+<div class="row">
+        <div class="col-md-4">
+
+<form class="form-horizontal" role="form"
+      action="/deviceInfo" method="POST">
+
+    <div class="Lunchcode">
+        <label for="usr">BARCODE:</label>
+        <input name="Barcode" type="text" class="form-control" id="usr" maxlength="4" pattern="\d{4}" required/>
+    </div>
+
+    <div id="container">
+        <ul id="keyboard">
+
+            <li class="letter num" data-num="1">1</li>
+            <li class="letter num" data-num="2">2</li>
+            <li class="letter num" data-num="3">3</li>
+            <li class="letter clear1 num" data-num="4">4</li>
+            <li class="letter num" data-num="5">5</li>
+            <li class="letter num" data-num="6">6</li>
+
+            <li class="letter clear1 num" data-num="7">7</li>
+            <li class="letter num" data-num="8">8</li>
+            <li class="letter num" data-num="9">9</li>
+            <li class="letter num" data-num="0">0</li>
+            <li class="letter num" id="clear">C</li>
+            <button  type="submit">GO</button>
+        </ul>     
+     </div>
+    </div>
+</form>       
+    
+<script>
+    (function () {
+        "use strict";
+
+        // Shortcut to get elements
+        var el = function (element) {
+            if (element.charAt(0) === "#") { // If passed an ID...
+                return document.querySelector(element); // ... returns single element
+            }
+
+            return document.querySelectorAll(element); // Otherwise, returns a nodelist
+        };
+
+        // Variables
+        var viewer = el("#viewer"), // Calculator screen where result is displayed
+            equals = el("#equals"), // Equal button
+            nums = el(".num"), // List of numbers
+            theNum = "", // Current number
+            oldNum = "", // First number
+            resultNum, // Result
+            operator; // Batman
+
+        // When: Number is clicked. Get the current number selected
+        var setNum = function () {
+            if (resultNum) { // If a result was displayed, reset number
+                theNum = this.getAttribute("data-num");
+                resultNum = "";
+            } else { // Otherwise, add digit to previous number (this is a string!)
+                theNum += this.getAttribute("data-num");
+            }
+
+            // viewer.innerHTML = theNum; // Display current number
+            usr.value = theNum;
+        };
+
+        // When: Operator is clicked. Pass number to oldNum and save operator
+        var moveNum = function () {
+            oldNum = theNum;
+            theNum = "";
+            operator = this.getAttribute("data-ops");
+
+            equals.setAttribute("data-result", ""); // Reset result in attr
+        };
+
+        // When: Equals is clicked. Calculate result
+        var displayNum = function () {
+
+            // Convert string input to numbers
+            oldNum = parseFloat(oldNum);
+            theNum = parseFloat(theNum);
+
+            // Display result, finally!
+            viewer.innerHTML = resultNum;
+            equals.setAttribute("data-result", resultNum);
+
+            // Now reset oldNum & keep result
+            oldNum = 0;
+            theNum = resultNum;
+        };
+
+        // When: Clear button is pressed. Clear everything
+        var clearAll = function () {
+            oldNum = "";
+            theNum = "";
+            usr.value = theNum;
+        };
+
+        /* The click events */
+        // Add click event to numbers
+        for (var i = 0, l = nums.length; i < l; i++) {
+            nums[i].onclick = setNum;
+        }
+
+        // Add click event to clear button
+        el("#clear").onclick = clearAll;
+   
+    }());
+</script>
