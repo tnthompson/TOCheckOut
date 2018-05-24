@@ -211,11 +211,19 @@ td, th {
     img {
         padding-top: 65px;
     }
-
-   
-<<<<<<< HEAD
- #goats{
-     text-align:center;
- }
-=======
->>>>>>> 679048c6eb96dfc0b3985682ee97fa76132280c5
+.bacon{
+    padding-top:80px;
+}
+.loaner{
+    padding-top:30px;
+    padding-bottom: 30px;
+}
+h4{
+    color:white;
+}
+.bacon2{
+    padding-top:20px;
+}
+.floats{
+    padding-top: 90px;
+}

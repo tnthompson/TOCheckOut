@@ -19,7 +19,8 @@
     <input type="hidden" name="barcode" value="{{barcode}}" />
     <input type="hidden" name="FName" value="{{FName}}"/>
     <input type="hidden" name="LName" value="{{LName}}"/>
-
+<div class="container">
+    <div class="bacon">
     <div class="checkbox">
     <label><input type="checkbox" name="damages" value="Keyboard">Keyboard</label>
     </div>
@@ -41,13 +42,14 @@
     <div class="checkbox">
     <label><input type="checkbox" name="damages" value= "Other">Other</label>
     </div>
-
+</div>
+</div>
         <div class = "report">
             <label for="usr">Report:</label>
             <input name="report"  type="text" class="form-control" id="usr">
         <div class="loaner">
             <label for="usr">Loaner Barcode:</label>
-            <input type="text" name="loaner"  maxlength="4" class="form-control" id="usr" pattern="\d{4}" required/>
+            <input type="text" name="loaner"  maxlength="4" class="form-control2" id="usr" pattern="\d{4}" required/>
         </div>
 
     <div class="checkbox">
