@@ -1,3 +1,15 @@
+<head>
+<script type="text/javascript">
+function isValid(){
+var password = document.getElementById('password').value;
+if (password == "rawr")
+req.flash("GOOD", "Device Added", "/devices");
+else
+req.flash("BAD", "Invalid Passcode", "/addDevice");
+}
+</script>
+</head>
+
 <form role="form"
         action="/addDevice2" method="POST">
 
@@ -64,7 +76,9 @@
         </tr>
     </table>
 
-    <button type ="submit" class="button">Add Device</button>
+    Password:
+    <input type="password" id="password" name="password">
+    <input type="submit" value="Add Device" onclick="isValid();">
 </form>
 
 
@@ -108,74 +122,3 @@ tr:nth-child(even) {
     background-color: #dddddd;
 }
 </style>
-
-<table>
-    <tr>
-        <th>Type</th>
-        <th>Damages</th>
-        <th>Date</th>
-        <th>Date Returned</th>
-        <th>Student Responsibility</th>
-    </tr>
-  {{#each Activities}}
-    <tr>
-        <td>{{this.Type}}</td>
-        <td>{{#if Damages}}
-        {{this.Damages}}
-<div class="col">
-<div id="outer">
-</div>
-<div id="floatRight">
-    
-<!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal{{this.Date}}">more info</button>
-
-    <!-- Modal -->
-<div class="modal fade" id="modal{{this.Date}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Details</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-          <table>
-         <tr>
-        <td>
-        <strong>Description: </strong>{{this.Description}}</td>
-        </tr>
-    </table>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                               </div>
-                          </div>
-                     </div>
-                </div>
-            </div>
-        </div>
-
-        {{else}}
-        None
-        {{/if}}</td>
-    <td>{{this.Date}}</td>
-    <td>{{#if DateReturned}}
-        {{this.DateReturned}}
-        {{else}}
-        <form role="form" name="Return"
-                action="/return" method="POST">
-            <input type="hidden" name="aID" value= "{{this.aID}}" />
-           
-        <button type="submit" class="Return">Return</button>
-        {{/if}}</td> 
-        </form>
-    <td>{{#if StudRes}}
-        {{this.StudRes}}
-        {{else}}
-        False
-        {{/if}}</td>
-  </tr>
-  {{/each}}
- </table>
