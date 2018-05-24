@@ -135,12 +135,17 @@ td, th {
     border-color: #e5e5e5;  
     cursor: pointer;  
     }  
-#responsible{
-    text-align:center;
-    text-transform: uppercase;
-    padding-top: 125px;
-    padding-bottom: 50px;
-    color: white;
+
+.flash{
+    padding-top: 35px;
+}
+
+.col-md-4 {
+    padding-top: 50px;
+}
+
+.col-md-8 {
+    padding-top: 15px;
 }
 
 .alert {
@@ -209,8 +214,9 @@ td, th {
     }
 
     img {
-        padding-top: 65px;
+        padding-top: 50px;
     }
+<<<<<<< HEAD
 .bacon{
     padding-top:80px;
 }
@@ -227,3 +233,9 @@ h4{
 .floats{
     padding-top: 90px;
 }
+=======
+    
+ #goats{
+     text-align:center;
+ }
+>>>>>>> ada5292bfd54bb17ede90dd00d91ceb85068218f

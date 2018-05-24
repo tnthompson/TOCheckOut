@@ -76,7 +76,7 @@
         <input type="hidden" name="LName" value="{{LName}}"/>
         <input type="hidden" name="serial" value="{{serial}}"/>
 
-        <button type="submit" value="submit" class="btn btn-primary">Check In</button>
+        <button type="submit" value="submit" class="btn btn-primary"><i class="material-icons">laptop_chromebook</i>Check In</button>
     </form>
     
 {{else}}
@@ -89,7 +89,7 @@
         <input type="hidden" name="LName" value="{{LName}}"/>
         <input type="hidden" name="SNumber" value="{{SNumber}}"/>
 
-        <button type="submit" value="submit" class="btn btn-primary">Check Out</button>
+        <button type="submit" value="submit" class="btn btn-primary"><i class="material-icons">laptop_chromebook</i>Check Out</button>
     </form>
 {{/if}}
 
@@ -235,7 +235,7 @@ tr:nth-child(even) {
 <div id="floatRight">
     
 <!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal{{this.Date}}">more info</button>
+<button type="button" class="btn btn-primary1" data-toggle="modal" data-target="#modal{{this.Date}}">more info</button>
 
     <!-- Modal -->
 <div class="modal fade" id="modal{{this.Date}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -275,7 +275,7 @@ tr:nth-child(even) {
                 action="/return" method="POST">
             <input type="hidden" name="aID" value= "{{this.aID}}" />
            
-        <button type="submit" class="Return">Return</button>
+        <button type="submit" class="btn btn-primary1">Return</button>
         {{/if}}</td> 
         </form>
     <td>{{#if StudRes}}
