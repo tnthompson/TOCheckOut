@@ -72,39 +72,21 @@ app.use(session({
     }
   };
   
-  // Flash Notification Middleware Initialization
-  app.use(flash(app, flashNotificationOptions))
+ // Flash Notification Middleware Initialization
+app.use(flash(app, flashNotificationOptions))
 
 app.use(flash(app));
 
 app.get('/', function (req, res) {
-    db.collection('students').find( {}).toArray(function (err, student) {
-        // db.collection('devices').findOne({ Barcode: parseInt(student.Tbc) }, function (err, device){
-
-
+    db.collection('students').find({"Activities.Returned":{$eq: false, $exists: true}}).toArray(function (err, student) {
 
         res.render('checkout', {
-            'studentlist':student
-            // pin: student.ID,
-            // FName: student.First_Name,
-            // LName: student.Last_Name, 
-            // Grade: student.Grade_Level,
-            // barcode: student.Tbc,
-            // Grad: student.Sched_YearOfGraduation,
-            // brand: device.Brand,
-            // type: device.Type,
-            // model: device.Model,
-            // vendor: device.Vendor,
-            // cdi: device.CDI,
-            // serial: device.ServiceTag,
-            // PDate: device.PurchaseDate,
+            'studentlist':student,
             });
-
-             
-        // });
     });
 });
 
+/*
 app.get('/test', function (req, res){
     db.collection('students').find({ "Activities.Returned": { $exists: true } } , function (err, student) {
        console.log(student);
@@ -113,6 +95,8 @@ app.get('/test', function (req, res){
         });
     });
 });
+*/
+
 app.post('/process', function (req, res) {
     db.collection('students').findOne({ ID: parseInt(req.body.pin) }, function (err, student) {
 
@@ -147,10 +131,10 @@ app.post('/process', function (req, res) {
 });
 
 app.post('/charger', function (req, res) {
-    console.log(req.body.pin);
+
     var d = new Date();
     db.collection('students').findAndModify({ "ID": parseInt(req.body.pin) },
-        [['_id', 'asc']], {
+        [['_aid', 'asc']], {
                 $addToSet: {
                     Activities: { aID: d.toISOString() , Date: d, Model: (req.body.model), Type:"Charger", Barcode: (req.body.barcode), Description: (req.body.report), Damages: (req.body.damages), StudRes: (req.body.StudRes), Loaner:(req.body.loaner),  Returned: false }
                 }
@@ -168,7 +152,7 @@ app.post('/charger', function (req, res) {
 });
 
 app.post('/chromebook', function (req, res) {
-    console.log(req.body.pin);
+
     var d = new Date();
     db.collection('students').findAndModify({ "ID": parseInt(req.body.pin) },
         [['_id', 'asc']], {
@@ -188,7 +172,7 @@ app.post('/chromebook', function (req, res) {
         db.collection('devices').findAndModify({ "Barcode": parseInt(req.body.loaner) },
         [['_id', 'asc']], {
                 $addToSet: {
-                    Activities: { aID: d.toISOString() , Date: d, Name: (req.body.FName +" " + req.body.LName), ID: (req.body.pin), Description: (req.body.report), Damages: (req.body.damages), StudRes: (req.body.StudRes), Returned: false }
+                    Activities: { aID: d.toISOString() , Date: d, Name: (req.body.FName +" " + req.body.LName), ID: (req.body.pin), Type: "Loaner", Damages: (req.body.damages), StudRes: (req.body.StudRes), Returned: false }
                 }
             
         }, { upsert: 1 },
@@ -245,14 +229,240 @@ app.post('/repair2', function(req, res) {
             }
             });
 
+            db.collection('devices').findAndModify({ "Loaner": parseInt(req.body.loaner) },
+        [['_id', 'asc']], {
+                $addToSet: {
+                    Activities: { aID: d.toISOString() , Date: d, Name: (req.body.FName + " " +  req.body.LName), ID: (req.body.pin), Description: (req.body.report), Damages: (req.body.damages), StudRes: (req.body.StudRes), Returned: false }
+                }
+            
+        }, { upsert: 1 },
+        function (err, thing) {
+            if (err) {
+                console.log(err);
+            } else {
+                console.log(thing);
+            }
+            });
+
         req.flash("GOOD", "Repair Submited.", "/") 
 });
 
+app.post('/checkIn', function (req, res) {
+
+    res.render('checkIn' , {
+        pin: req.body.pin,
+        FName: req.body.FName,
+        LName: req.body.LName,
+        barcode: req.body.barcode,
+        model: req.body.model,
+        serial: req.body.serial
+    });
+});
+
+app.post('/checkIn2', function(req, res) {
+    var d = new Date();
+
+    db.collection('devices').updateOne({ "Barcode": parseInt(req.body.barcode) },
+    {$set: {SoldTo: (req.body.FName) + " " + (req.body.LName)}
+
+    });
+
+    db.collection('devices').findAndModify({ "Barcode": parseInt(req.body.barcode) },
+        [['_id', 'asc']], {
+            $addToSet: {
+                Activities: {Date: new Date(), aID: d.toISOString() ,Date: d, Model: (req.body.model), Type: "Check-In", Barcode: (req.body.barcode), Description: (req.body.report), Damages: (req.body.damages), Username: (req.body.username), Charger: (req.body.charger), Senior_Purchase:(req.body.SPurchase)}
+            }
+
+        }, { upsert: 1 },
+        function (err, thing) {
+            if (err) {
+                console.log(err);
+            } else {
+                console.log(thing);
+            }
+        });    
+
+        db.collection('students').findAndModify({ "ID": parseInt(req.body.pin) },
+        [['_id', 'asc']], {
+            $addToSet: {
+                Activities: {Date: new Date(), aID: d.toISOString() ,Date: d, Model: (req.body.model), Type: "Check-In", Barcode: (req.body.barcode), Description: (req.body.report), Damages: (req.body.damages), Username: (req.body.username), Charger: (req.body.charger), Senior_Purchase:(req.body.SPurchase)}
+            }
+
+        }, { upsert: 1 },
+        function (err, thing) {
+            if (err) {
+                console.log(err);
+            } else {
+                console.log(thing);
+            }
+        });
+        req.flash("GOOD", "Device Checked In.", "/") 
+    });
+
+app.post('/checkOut', function (req, res) {
+    var d = new Date();
+    db.collection('students').findAndModify({ "ID": parseInt(req.body.pin) },
+        [['_id', 'asc']], {
+            $addToSet: {
+                Activities: {Date: new Date(), aID: d.toISOString() ,Date: d, Model: (req.body.model), Type: "Checkout", Barcode: (req.body.barcode)}
+            }
+
+        }, { upsert: 1 },
+        function (err, thing) {
+            if (err) {
+                console.log(err);
+            } else {
+                console.log(thing);
+            }
+        });
+
+    db.collection('devices').updateOne({ "Barcode": parseInt(req.body.barcode) },
+    {$set: {StudentName: (req.body.FName + " " + req.body.LName), ID: (req.body.pin)}
+
+    });
+
+    db.collection('devices').findAndModify({ "Barcode": parseInt(req.body.barcode) },
+    [['_id', 'asc']], {
+            $addToSet: {
+                Activities: { aID: d.toISOString() , Date: d, Type: "Checkout", Name: (req.body.FName + " " +  req.body.LName), ID: (req.body.pin)}
+            }
+        
+    }, { upsert: 1 },
+    function (err, thing) {
+        if (err) {
+            console.log(err);
+        } else {
+            console.log(thing);
+        }
+    });
+
+        req.flash("GOOD", "Device Checked Out.", "/") 
+});
+
+
 app.post("/return", function (req,res){
 
-    console.log(req.body.aID);
     db.collection('students').updateOne({"Activities":{$elemMatch: {"Returned": false, "aID":req.body.aID}}},{$set: {"Activities.$.Returned" : true, "Activities.$.DateReturned": new Date()}})
+    db.collection('devices').updateOne({"Activities":{$elemMatch: {"Returned": false, "aID":req.body.aID}}},{$set: {"Activities.$.Returned" : true, "Activities.$.DateReturned": new Date()}})
+
     req.flash("GOOD", "Loaner returned.", "/")
+
+});
+
+app.get("/devices", function (req, res) {
+    res.render("devices")
+});
+
+app.post('/deviceInfo', function (req, res) {
+    db.collection('devices').findOne({ Barcode: parseInt(req.body.Barcode) }, function (err, device) {
+
+        if (device != null){
+
+            res.render('deviceInfo', {
+                barcode: device.Barcode,
+                bldg: device.Bldg,
+                room: device.Room,
+                brand: device.Brand,               
+                type: device.Type,
+                model: device.Model,
+                vendor: device.Vendor,
+                serial: device.ServiceTag,
+                PDate: device.PurchaseDate,
+                notes: device.Notes,
+                cdi: device.CDI,
+                order: device.Order,
+                PClaimed: device.PartsClaimed,
+                UnDate: device.UntaggedDate,
+                dws: device.DWS,
+                sold: device.SoldTo,
+                SName: device.StudentName,
+                id: device.ID,
+                SNumber: device.StudentNumber               
+            });
+
+    } else {
+        req.flash("BAD", "No Device Found", "/devices");
+    }
+
+    });
+});
+
+app.post('/modify', function(req, res) {
+    var d = new Date();
+    db.collection('devices').updateOne({ "Barcode": parseInt(req.body.barcode) },
+        {$set: { Bldg: (req.body.bldg),
+                Room: (req.body.room),
+                Brand: (req.body.brand),
+                Type: (req.body.type),
+                Model: (req.body.type),
+                Vendor: (req.body.vendor),
+                ServiceTag: (req.body.serial),
+                PurchaseDate: (req.body.PDate),
+                Notes: (req.body.notes),
+                CDI: (req.body.cdi),
+                Order: (req.body.order),
+                PartsClaimed: (req.body.PClaimed),
+                UntaggedDate: (req.body.UnDate),
+                DWS: (req.body.dws),
+                SoldTo: (req.body.sold),
+                StudentName: (req.body.SName),
+                ID: (req.body.id),
+                StudentNumber: (req.body.SNumber)
+            }
+        });
+    req.flash("GOOD", "Modify Submited", "/")
+});
+
+app.post('/addDevice', function (req, res) {
+    res.render('addDevice' , {
+                Barcode: req.body.barcode,
+                Bldg: req.body.bldg,
+                Room: req.body.room,
+                Brand: req.body.brand,
+                Type: req.body.type,
+                Model: req.body.type,
+                Vendor: req.body.vendor,
+                ServiceTag: req.body.serial,
+                PurchaseDate: req.body.PDate,
+                Notes: req.body.notes,
+                CDI: req.body.cdi,
+                Order: req.body.order,
+                PartsClaimed: req.body.PClaimed,
+                UntaggedDate: req.body.UnDate,
+                DWS: req.body.dws,
+                SoldTo: req.body.sold,
+                StudentName: req.body.SName,
+                ID: req.body.id,
+                StudentNumber: req.body.SNumber
+    });
+});
+
+
+app.post('/addDevice2', function(req, res) {
+    var d = new Date();
+
+    db.collection('devices').insertOne({
+        Barcode: parseInt(req.body.barcode),
+        Bldg: (req.body.bldg),
+        Room: (req.body.room),
+        Brand: (req.body.brand),
+        Type: (req.body.type),
+        Model: (req.body.type),
+        Vendor: (req.body.vendor),
+        ServiceTag: (req.body.serial),
+        PurchaseDate: (req.body.PDate),
+        Notes: (req.body.notes),
+        CDI: (req.body.cdi),
+        Order: (req.body.order),
+        PartsClaimed: (req.body.PClaimed),
+        UntaggedDate: (req.body.UnDate),
+        DWS: (req.body.dws),
+        SoldTo: (req.body.sold),
+        StudentName: (req.body.SName),
+        ID: (req.body.id),
+        StudentNumber: (req.body.SNumber)
+    });
+        req.flash("GOOD", "Device Added", "/devices");
 });
 
 

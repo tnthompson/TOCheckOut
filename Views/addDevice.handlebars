@@ -1,0 +1,181 @@
+<form role="form"
+        action="/addDevice2" method="POST">
+
+    <table id="computerInfo">
+        <tr>
+            <th>DEVICE INFORMATION </th>
+        </tr>
+        <tr>
+            <td><strong>Barcode:</strong><input type="text" name="barcode" value="{{barcode}}"> </td>
+        </tr>
+        <tr>
+            <td><strong>Building: </strong> <input type="text" name="bldg" value=""></td>
+        </tr>
+        <tr>
+            <td><strong>Room: </strong> <input type="text" name="room" value=""> </td>
+        </tr>
+        <tr>
+            <td><strong>Brand:</strong> <input type="text" name="brand" value=""></td>
+        </tr>
+        <tr>
+            <td><strong>Type:</strong> <input type="text" name="type" value=""></td>
+        </tr>
+        <tr>
+            <td><strong>Model: </strong> <input type="text" name="model" value=""></td>
+        </tr>
+        <tr>
+            <td><strong>Vendor:</strong> <input type="text" name="vendor" value=""></td>
+        </tr>
+        <tr>
+            <td><strong>Serial Number:</strong> <input type="text" name="serial" value=""></td>
+        </tr>
+        <tr>
+            <td><strong>Purchase Date:</strong> <input type="text" name="PDate" value=""></td>
+        </tr>
+        <tr>
+            <td><strong>Notes: </strong> <input type="text" name="notes" value=""></td>
+        </tr>
+        <tr>
+            <td><strong>CDI Number: </strong> <input type="text" name="cdi" value=""> </td>
+        </tr>
+        <tr>
+            <td><strong>Order:</strong> <input type="text" name="order" value=""></td>
+        </tr>
+        <tr>
+            <td><strong>Parts Claimed: </strong> <input type="text" name="PClaimed" value=""></td>
+        </tr>
+        <tr>
+            <td><strong>Untagged Date: </strong> <input type="text" name="UnDate" value=""></td>
+        </tr>
+        <tr>
+            <td><strong>DWS:</strong> <input type="text" name="dws" value=""></td>
+        </tr>
+        <tr>
+            <td><strong>Sold To:</strong> <input type="text" name="sold" value=""></td>
+        </tr>
+            <tr>
+            <td><strong>Student Name: </strong> <input type="text" name="SName" value=""></td>
+        </tr>
+        <tr>
+            <td><strong>id:</strong> <input type="text" name="id" value=""></td>
+        </tr>
+        <tr>
+            <td><strong>Student Number:</strong> <input type="text" name="SNumber" value=""></td>
+        </tr>
+    </table>
+
+    <button type ="submit" class="button">Add Device</button>
+</form>
+
+
+<style>
+    #computerInfo {
+        margin-top: 20px;
+        width: 50%;
+    }
+
+    #computerInfo td, #computerInfo th {
+        border: 1px solid #ddd;
+        padding: 8px;
+    }
+
+    #computerInfo th {
+        padding-top: 15px;
+        padding-bottom: 15px;
+        text-align: left;
+        background-color: white;
+        color: black;
+        font-size: 20px;
+        background-color: lightgray;
+    }
+</style>
+
+
+<style>
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+
+tr:nth-child(even) {
+    background-color: #dddddd;
+}
+</style>
+
+<table>
+    <tr>
+        <th>Type</th>
+        <th>Damages</th>
+        <th>Date</th>
+        <th>Date Returned</th>
+        <th>Student Responsibility</th>
+    </tr>
+  {{#each Activities}}
+    <tr>
+        <td>{{this.Type}}</td>
+        <td>{{#if Damages}}
+        {{this.Damages}}
+<div class="col">
+<div id="outer">
+</div>
+<div id="floatRight">
+    
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal{{this.Date}}">more info</button>
+
+    <!-- Modal -->
+<div class="modal fade" id="modal{{this.Date}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Details</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+          <table>
+         <tr>
+        <td>
+        <strong>Description: </strong>{{this.Description}}</td>
+        </tr>
+    </table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                               </div>
+                          </div>
+                     </div>
+                </div>
+            </div>
+        </div>
+
+        {{else}}
+        None
+        {{/if}}</td>
+    <td>{{this.Date}}</td>
+    <td>{{#if DateReturned}}
+        {{this.DateReturned}}
+        {{else}}
+        <form role="form" name="Return"
+                action="/return" method="POST">
+            <input type="hidden" name="aID" value= "{{this.aID}}" />
+           
+        <button type="submit" class="Return">Return</button>
+        {{/if}}</td> 
+        </form>
+    <td>{{#if StudRes}}
+        {{this.StudRes}}
+        {{else}}
+        False
+        {{/if}}</td>
+  </tr>
+  {{/each}}
+ </table>
