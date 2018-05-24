@@ -135,12 +135,17 @@ td, th {
     border-color: #e5e5e5;  
     cursor: pointer;  
     }  
-#responsible{
-    text-align:center;
-    text-transform: uppercase;
-    padding-top: 125px;
-    padding-bottom: 50px;
-    color: white;
+
+.flash{
+    padding-top: 35px;
+}
+
+.col-md-4 {
+    padding-top: 50px;
+}
+
+.col-md-8 {
+    padding-top: 15px;
 }
 
 .alert {
@@ -213,9 +218,3 @@ td, th {
     }
 
    
-<<<<<<< HEAD
- #goats{
-     text-align:center;
- }
-=======
->>>>>>> 679048c6eb96dfc0b3985682ee97fa76132280c5
