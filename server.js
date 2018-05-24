@@ -79,7 +79,7 @@ app.use(flash(app));
 
 app.get('/', function (req, res) {
     db.collection('students').find({"Activities.Returned":{$eq: false, $exists: true}}).toArray(function (err, student) {
-console.log(student);
+
         res.render('checkout', {
             'studentlist':student,
             });
@@ -334,7 +334,7 @@ app.post('/checkOut', function (req, res) {
                 console.log(thing);
             }
         });
-//console.log(req.body.SNumber);
+
     db.collection('devices').updateOne({ "Barcode": parseInt(req.body.barcode) },
     {$set: {StudentName: (req.body.FName + " " + req.body.LName), ID: (req.body.pin), StudentNumber: (req.body.SNumber)}
 
