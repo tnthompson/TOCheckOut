@@ -148,6 +148,7 @@ tr:nth-child(even) {
 <table>
     <tr>
         <th>Type</th>
+       <th>Name</th>
         <th>Damages</th>
         <th>Date</th>
         <th>Date Returned</th>
@@ -156,6 +157,7 @@ tr:nth-child(even) {
   {{#each Activities}}
     <tr>
         <td>{{this.Type}}</td>
+        <td>{{this.Name}}</td>
         <td>{{#if Damages}}
         {{this.Damages}}
 <div class="col">

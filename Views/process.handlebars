@@ -1,4 +1,4 @@
-﻿<img src={{img}} alt="Mountain View" />
+﻿<img src={{img}} alt="Student Picture" />
 
 <div class="btn-group">
 
@@ -66,6 +66,7 @@
         <button type="submit" value="submit" class="btn btn-primary"><i class="material-icons">build</i>Repair</button>
     </form>
 
+{{#if CheckedOut}}
     <form role="form"
             action="/checkIn" method="POST">
         <input type="hidden" name="pin" value="{{pin}}"/>
@@ -77,21 +78,28 @@
 
         <button type="submit" value="submit" class="btn btn-primary">Check In</button>
     </form>
-
-    <form role="form"
+    
+{{else}}
+<form role="form"
             action="/checkOut" method="POST">
         <input type="hidden" name="pin" value="{{pin}}"/>
         <input type="hidden" name="model" value="{{model}}"/>
         <input type="hidden" name="barcode" value="{{barcode}}"/>
         <input type="hidden" name="FName" value="{{FName}}"/>
         <input type="hidden" name="LName" value="{{LName}}"/>
+        <input type="hidden" name="SNumber" value="{{SNumber}}"/>
 
         <button type="submit" value="submit" class="btn btn-primary">Check Out</button>
     </form>
-    
+{{/if}}
+
+<<<<<<< HEAD
+
+=======
 </div>
 
 
+>>>>>>> 679048c6eb96dfc0b3985682ee97fa76132280c5
 
 {{! Student table CSS}}
 <style>

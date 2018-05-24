@@ -24,3 +24,5 @@ Checkout.csv
 convert.json
 convertcsv(2).json
 convertcsv.json
+public/img/*
+checkout stuff/*
