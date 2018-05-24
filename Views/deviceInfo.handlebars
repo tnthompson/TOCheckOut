@@ -1,37 +1,3 @@
-<div class="btn-group">
-
-    <form role="form"
-          action="/addDevice" method="POST">
-        <button type ="submit" class="button">Add Device</button>
-    </form>
-</div>
-
-<style>
-    .btn-group {
-        padding: 15px 32px;
-        margin-right: 10px;
-        display: inline-block;
-        margin-left: 100px;
-        width: 33%;
-       
-    }
-
-    .button {
-        background-color: #f50909;
-        display: block;
-        padding: 15px 32px;
-        cursor: pointer;
-        width: 200%;
-        text-align: center;
-        font-size: 25px;
-    }
-
-    .btn-group .button:hover {
-        background-color: #100c6d;
-        color: white;
-    }
-</style>
-
 <form role="form"
         action="/modify" method="POST">
     <input type="hidden" name="barcode" value="{{barcode}}"/>
@@ -50,19 +16,19 @@
             <td><strong>Room: </strong> <input type="text" name="room" value="{{room}}"> </td>
         </tr>
         <tr>
-            <td><strong>Brand:</strong> <input type="text" name="brand" value="{{brand}}"></td>
+            <td><strong>Brand:</strong> <input type="text" name="brand" value="{{brand}}" required></td>
         </tr>
         <tr>
-            <td><strong>Type:</strong> <input type="text" name="type" value="{{type}}"></td>
+            <td><strong>Type:</strong> <input type="text" name="type" value="{{type}}" required></td>
         </tr>
         <tr>
-            <td><strong>Model: </strong> <input type="text" name="model" value="{{model}}"></td>
+            <td><strong>Model: </strong> <input type="text" name="model" value="{{model}}" required></td>
         </tr>
         <tr>
             <td><strong>Vendor:</strong> <input type="text" name="vendor" value="{{vendor}}"></td>
         </tr>
         <tr>
-            <td><strong>Serial Number:</strong> <input type="text" name="serial" value="{{serial}}"></td>
+            <td><strong>Serial Number:</strong> <input type="text" name="serial" value="{{serial}}" required></td>
         </tr>
         <tr>
             <td><strong>Purchase Date:</strong> <input type="text" name="PDate" value="{{PDate}}"></td>
@@ -166,7 +132,7 @@ tr:nth-child(even) {
 <div id="floatRight">
     
 <!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal{{this.Date}}">more info</button>
+<button type="button" class="btn btn-primary1" data-toggle="modal" data-target="#modal{{this.Date}}">more info</button>
 
     <!-- Modal -->
 <div class="modal fade" id="modal{{this.Date}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
