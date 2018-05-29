@@ -174,7 +174,7 @@
     </tr>
 </table>
 
-{{!Device table CSS}}
+
 <style>
     #computerInfo {
         margin-top: 20px;
@@ -195,10 +195,17 @@
         font-size: 20px;
         background-color: lightgray;
     }
-</style>
 
+    #transactions th{
+        padding-top: 15px;
+        padding-bottom: 15px;
+        text-align: left;
+        background-color: white;
+        color: black;
+        font-size: 20px;
+        background-color: lightgray;
+    }
 
-<style>
 table {
     font-family: arial, sans-serif;
     border-collapse: collapse;
@@ -214,9 +221,14 @@ td, th {
 tr:nth-child(even) {
     background-color: #dddddd;
 }
+tr:nth-child(odd) {
+    color: #dddddd;
+}
 </style>
 
-<table>
+<br>
+
+<table id="transactions">
     <tr>
         <th>Type</th>
         <th>Damages</th>

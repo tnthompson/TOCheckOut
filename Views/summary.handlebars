@@ -1,39 +1,50 @@
-<table>
-  
-  <style>
-table {
-    font-family: arial, sans-serif;
-    border-collapse: collapse;
-    width: 100%;
-}
+<style>
+  #transactions th{
+      padding-top: 15px;
+      padding-bottom: 15px;
+      text-align: left;
+      background-color: white;
+      color: black;
+      font-size: 20px;
+      background-color: lightgray;
+  }
 
-td, th {
-    border: 1px solid #dddddd;
-    text-align: left;
-    padding: 8px;
-}
+  table {
+      font-family: arial, sans-serif;
+      border-collapse: collapse;
+      width: 100%;
+  }
 
-tr:nth-child(even) {
-    background-color: #dddddd;
-}
+  td, th  {
+      border: 1px solid #dddddd;
+      text-align: left;
+      padding: 8px;
+  }
+
+  tr:nth-child(even) {
+      background-color: #dddddd;
+  }
+  tr:nth-child(odd) {
+      color: #dddddd;
+  }
 </style>
+
 <div class="floats">
-<table>
+<table id="transactions">
     <tr>
         <th>Student</th>
         <th>Barcode</th>
         <th>Damages</th>
     </tr>
     {{#each studentlist as |student_list|}}
-    <tr>
 
-  {{#each Activities}}
+{{!  {{#each Activities}}
   
     <tr>
-        <td>{{student_list.First_Name}} {{student_list.Last_Name}} </td>
-        <td>{{student_list.Tbc}}</td>
-        <td>{{#if Damages}}
-        {{this.Damages}}
+      <td>{{student_list.First_Name}} {{student_list.Last_Name}} </td>
+      <td>{{student_list.Tbc}}</td>
+      <td>{{#if Damages}}
+      {{this.Damages}}
 <div class="col">
 <div id="outer">
 </div>
@@ -53,12 +64,13 @@ tr:nth-child(even) {
         </button>
       </div>
       <div class="modal-body">
-          <table>
-         <tr>
-        <td>
-        <strong>Description: </strong>{{this.Description}}</td>
-        </tr>
-    </table>
+        <table>
+          <tr>
+            <td>
+              <strong>Description: </strong>{{this.Description}}
+            </td>
+          </tr>
+        </table>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -74,6 +86,6 @@ tr:nth-child(even) {
         {{/if}}</td>
   {{/each}}
   {{!{{/if}}
-  {{/each}}
+ {{!{{/each}}
  </table>
  </div>

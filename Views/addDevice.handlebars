@@ -18,7 +18,7 @@ req.flash("BAD", "Invalid Passcode", "/addDevice");
             <th>DEVICE INFORMATION </th>
         </tr>
         <tr>
-            <td><strong>Barcode:</strong><input type="text" name="barcode" value="{{barcode}}" minlength="4" maxlength="5" required> </td>
+            <td><strong>Barcode: </strong><input type="text" name="barcode" value="{{barcode}}" minlength="4" maxlength="5" required> </td>
         </tr>
         <tr>
             <td><strong>Building: </strong> <input type="text" name="bldg" value=""></td>
@@ -27,7 +27,7 @@ req.flash("BAD", "Invalid Passcode", "/addDevice");
             <td><strong>Room: </strong> <input type="text" name="room" value=""> </td>
         </tr>
         <tr>
-            <td><strong>Brand:</strong> <input type="text" name="brand" value="" required></td>
+            <td><strong>Brand: </strong> <input type="text" name="brand" value="" required></td>
         </tr>
         <tr>
             <td><strong>Type:</strong> <input type="text" name="type" value="" required></td>
@@ -36,13 +36,13 @@ req.flash("BAD", "Invalid Passcode", "/addDevice");
             <td><strong>Model: </strong> <input type="text" name="model" value="" required></td>
         </tr>
         <tr>
-            <td><strong>Vendor:</strong> <input type="text" name="vendor" value="" required></td>
+            <td><strong>Vendor: </strong> <input type="text" name="vendor" value="" required></td>
         </tr>
         <tr>
-            <td><strong>Serial Number:</strong> <input type="text" name="serial" value="" required></td>
+            <td><strong>Serial Number: </strong> <input type="text" name="serial" value="" required></td>
         </tr>
         <tr>
-            <td><strong>Purchase Date:</strong> <input type="text" name="PDate" value="" required></td>
+            <td><strong>Purchase Date: </strong> <input type="text" name="PDate" value="" required></td>
         </tr>
         <tr>
             <td><strong>Notes: </strong> <input type="text" name="notes" value=""></td>
@@ -51,7 +51,7 @@ req.flash("BAD", "Invalid Passcode", "/addDevice");
             <td><strong>CDI Number: </strong> <input type="text" name="cdi" value=""> </td>
         </tr>
         <tr>
-            <td><strong>Order:</strong> <input type="text" name="order" value=""></td>
+            <td><strong>Order: </strong> <input type="text" name="order" value=""></td>
         </tr>
         <tr>
             <td><strong>Parts Claimed: </strong> <input type="text" name="PClaimed" value=""></td>
@@ -60,25 +60,25 @@ req.flash("BAD", "Invalid Passcode", "/addDevice");
             <td><strong>Untagged Date: </strong> <input type="text" name="UnDate" value=""></td>
         </tr>
         <tr>
-            <td><strong>DWS:</strong> <input type="text" name="dws" value=""></td>
+            <td><strong>DWS: </strong> <input type="text" name="dws" value=""></td>
         </tr>
         <tr>
-            <td><strong>Sold To:</strong> <input type="text" name="sold" value=""></td>
+            <td><strong>Sold To: </strong> <input type="text" name="sold" value=""></td>
         </tr>
             <tr>
             <td><strong>Student Name: </strong> <input type="text" name="SName" value=""></td>
         </tr>
         <tr>
-            <td><strong>id:</strong> <input type="text" name="id" value=""></td>
+            <td><strong>ID: </strong> <input type="text" name="id" value=""></td>
         </tr>
         <tr>
-            <td><strong>Student Number:</strong> <input type="text" name="SNumber" value=""></td>
+            <td><strong>Student Number: </strong> <input type="text" name="SNumber" value=""></td>
         </tr>
     </table>
 
     Password:
     <input type="password" id="password" name="password">
-    <input type="submit" value="Add Device" onclick="isValid();">
+    <input type="submit" class="btn btn-secondary" value="Add Device" onclick="isValid();">
 </form>
 
 
@@ -102,14 +102,16 @@ req.flash("BAD", "Invalid Passcode", "/addDevice");
         font-size: 20px;
         background-color: lightgray;
     }
-</style>
 
+tr:nth-child(odd) {
+    color: #dddddd;
+}
 
-<style>
 table {
     font-family: arial, sans-serif;
     border-collapse: collapse;
     width: 100%;
+    padding-top: 5000px
 }
 
 td, th {

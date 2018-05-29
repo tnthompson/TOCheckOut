@@ -3,6 +3,7 @@
     <input type="hidden" name="barcode" value="{{barcode}}"/>
 
     <table id="computerInfo">
+        
         <tr>
             <th>DEVICE INFORMATION </th>
         </tr>
@@ -65,11 +66,9 @@
         </tr>
     </table>
 
-
-    <button type ="submit" class="button2">Modify</button>
+    <button type ="submit" class="btn btn-secondary">Modify</button>
 </form>
 
-{{!Device table CSS}}
 <style>
     #computerInfo {
         margin-top: 20px;
@@ -90,10 +89,17 @@
         font-size: 20px;
         background-color: lightgray;
     }
-</style>
 
+    #transactions th{
+        padding-top: 15px;
+        padding-bottom: 15px;
+        text-align: left;
+        background-color: white;
+        color: black;
+        font-size: 20px;
+        background-color: lightgray;
+    }
 
-<style>
 table {
     font-family: arial, sans-serif;
     border-collapse: collapse;
@@ -109,9 +115,12 @@ td, th {
 tr:nth-child(even) {
     background-color: #dddddd;
 }
+tr:nth-child(odd) {
+    color: #dddddd;
+}
 </style>
 
-<table>
+<table id="transactions">
     <tr>
         <th>Type</th>
        <th>Name</th>

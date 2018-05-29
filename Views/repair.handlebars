@@ -11,7 +11,6 @@
 }
 </style>
 
-
 <form role="form"
         action="/repair2" method="POST">
     <input type="hidden" name="pin" value="{{pin}}" />
@@ -19,30 +18,31 @@
     <input type="hidden" name="barcode" value="{{barcode}}" />
     <input type="hidden" name="FName" value="{{FName}}"/>
     <input type="hidden" name="LName" value="{{LName}}"/>
+
 <div class="container">
     <div class="bacon">
-    <div class="checkbox">
-    <label><input type="checkbox" name="damages" value="Keyboard">Keyboard</label>
+        <div class="checkbox">
+        <label><input type="checkbox" name="damages" value="Keyboard">Keyboard</label>
+        </div>
+        <div class="checkbox">
+        <label><input type="checkbox"  name="damages" value= "Display">Display</label>
+        </div>
+        <div class="checkbox">
+        <label><input type="checkbox" name="damages" value= "Case">Case</label>
+        </div>
+        <div class="checkbox">
+        <label><input type="checkbox" name="damages" value= "Touchpad">Touchpad</label>
+        </div>
+        <div class="checkbox">
+        <label><input type="checkbox" name="damages" value= "Sound System">Sound System</label>
+        </div>
+        <div class="checkbox">
+        <label><input type="checkbox" name="damages" value= "Charger">Charger</label>
+        </div>
+        <div class="checkbox">
+        <label><input type="checkbox" name="damages" value= "Other">Other</label>
+        </div>
     </div>
-    <div class="checkbox">
-    <label><input type="checkbox"  name="damages" value= "Display">Display</label>
-    </div>
-    <div class="checkbox">
-    <label><input type="checkbox" name="damages" value= "Case">Case</label>
-    </div>
-    <div class="checkbox">
-    <label><input type="checkbox" name="damages" value= "Touchpad">Touchpad</label>
-    </div>
-    <div class="checkbox">
-    <label><input type="checkbox" name="damages" value= "Sound System">Sound System</label>
-    </div>
-    <div class="checkbox">
-    <label><input type="checkbox" name="damages" value= "Charger">Charger</label>
-    </div>
-    <div class="checkbox">
-    <label><input type="checkbox" name="damages" value= "Other">Other</label>
-    </div>
-</div>
 </div>
         <div class = "report">
             <label for="usr">Report:</label>
@@ -55,6 +55,6 @@
     <div class="checkbox">
     <label><input type="checkbox"  name="StudRes" value= "True">Student Responsibility</label>
     </div>
-        <button type ="submit" class="button">Submit</button>
+        <button type ="submit" class="btn btn-secondary">Submit</button>
     </div>
 </form>
