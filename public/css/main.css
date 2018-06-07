@@ -222,6 +222,11 @@ td, th {
         color: #e5e5e5 !important;
     }
 
+    .btn-group1 .button:hover {
+        background-color: #212121 !important;
+        color: #e5e5e5 !important;
+    }
+    
     .btn .material-icons {
         font-size: 35px !important;
     }

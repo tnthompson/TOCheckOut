@@ -12,49 +12,38 @@
     </form>
 
 
-    <form role="form" name= "CBloaner"
+
+        <button type ="button" data-toggle="modal" data-target="#CBLoaner_dialog" class="btn btn-primary"><i class="material-icons">laptop_chromebook</i>Chromebook</button>
+<!-- the div that represents the modal dialog -->
+<div class="modal fade" id="CBLoaner_dialog" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Loaner Barcode</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            </div>
+                <div class="modal-body">
+                    <form role="form" name= "CBloaner"
           action="/chromebook" method="POST" onsubmit="return CBloanerValidateForm()">
         <input type="hidden" name="pin" value="{{pin}}" />
         <input type="hidden" name="model" value="{{model}}" />
         <input type="hidden" name="FName" value="{{FName}}" />
         <input type="hidden" name="LName" value="{{LName}}" />
-        <input type="hidden" name="barcode" value="{{barcode}}" />
          <input type="hidden" name="description" value="{{description}}" />
+         <tr>
+            <td><strong>Enter Loaner Barcode: </strong><input type="text" name="loaner" minlength="4" maxlength="5" required> </td>
+        </tr>
 
-        <button type ="submit" class="btn btn-primary"><i class="material-icons">laptop_chromebook</i>Chromebook</button>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type ="submit" class="btn btn-default">Send</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
-        <!-- div class="loaner">
-            <label for="usr">Loaner Barcode:</label>
-            <input type="text" name="loaner"  maxlength="4" class="form-control" id="usr" pattern="\d{4}" required/>
-        </div -->
-
-{{! <script>
-    function CBloanerValidateForm() {
-    var x = document.forms["CBloaner"]["loaner"].value;
-    if (x == "") {
-        alert("Barcode must be filled out");
-        return false;
-    }
-}
-</script>
-
-
-   <script>
-            function chromebook() {
-                var txt;
-                var numbers = /^[0-9]{4}$/;
-                var barcode = prompt("Enter Loaner Barcode:");
-                if (barcode == null || barcode == "") {
-                    txt = "User cancelled the prompt.";
-                } else {
-                }
-                document.getElementById("chromebook").innerHTML = txt;
-            }
-        </script>
-}}
-        
-    </form>
-
+<br>        
     <form role="form"
             action="/repair" method="POST">
         <input type="hidden" name="pin" value="{{pin}}"/>
@@ -65,6 +54,7 @@
 
         <button type="submit" value="submit" class="btn btn-primary"><i class="material-icons">build</i>Repair</button>
     </form>
+<br>
 
 {{#if CheckedOut}}
     <form role="form"

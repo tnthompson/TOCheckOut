@@ -155,7 +155,7 @@ app.post('/charger', function (req, res) {
             if (err) {
                 console.log(err);
             } else {
-                console.log(thing);
+              //  console.log(thing);
             }
         });
 
@@ -176,7 +176,7 @@ app.post('/chromebook', function (req, res) {
             if (err) {
                 console.log(err);
             } else {
-                console.log(thing);
+            //    console.log(thing);
             }
         });
 
@@ -191,7 +191,7 @@ app.post('/chromebook', function (req, res) {
             if (err) {
                 console.log(err);
             } else {
-                console.log(thing);
+            //    console.log(thing);
             }
             });
 
@@ -221,7 +221,7 @@ app.post('/repair2', function(req, res) {
             if (err) {
                 console.log(err);
             } else {
-                console.log(thing);
+            //    console.log(thing);
             }
         });
 
@@ -236,7 +236,7 @@ app.post('/repair2', function(req, res) {
             if (err) {
                 console.log(err);
             } else {
-                console.log(thing);
+            //    console.log(thing);
             }
             });
 
@@ -251,7 +251,7 @@ app.post('/repair2', function(req, res) {
             if (err) {
                 console.log(err);
             } else {
-                console.log(thing);
+            //    console.log(thing);
             }
             });
 
@@ -331,7 +331,7 @@ app.post('/checkOut', function (req, res) {
             if (err) {
                 console.log(err);
             } else {
-                console.log(thing);
+            //    console.log(thing);
             }
         });
 
@@ -351,7 +351,7 @@ app.post('/checkOut', function (req, res) {
         if (err) {
             console.log(err);
         } else {
-            console.log(thing);
+        //    console.log(thing);
         }
     });
 
@@ -409,6 +409,12 @@ app.post('/deviceInfo', function (req, res) {
 
 app.post('/modify', function(req, res) {
     var d = new Date();
+    
+
+    if (req.body.password != "rawr"){
+        req.flash("BAD", "Invalid Password", "/devices");
+
+   } else {
     db.collection('devices').updateOne({ "Barcode": parseInt(req.body.barcode) },
         {$set: { Bldg: (req.body.bldg),
                 Room: (req.body.room),
@@ -431,7 +437,7 @@ app.post('/modify', function(req, res) {
             }
         });
     req.flash("GOOD", "Modify Submited", "/")
-});
+}});
 
 app.post('/addDevice', function (req, res) {
     res.render('addDevice' , {
@@ -461,6 +467,11 @@ app.post('/addDevice', function (req, res) {
 app.post('/addDevice2', function(req, res) {
     var d = new Date();
 
+    if (req.body.password != "rawr"){
+         req.flash("BAD", "Invalid Password", "/devices");
+
+    } else {
+          
     db.collection('devices').insertOne({
         Barcode: parseInt(req.body.barcode),
         Bldg: (req.body.bldg),
@@ -483,7 +494,7 @@ app.post('/addDevice2', function(req, res) {
         StudentNumber: (req.body.SNumber)
     });
         req.flash("GOOD", "Device Added", "/devices");
-});
+}});
 
 
 // 404 page

@@ -89,3 +89,9 @@
  {{!{{/each}}
  </table>
  </div>
+
+{{#each studentlist as |student_list|}}
+ {{#if CheckedOut}}
+ {{this.CheckedOut}}
+ {{/if}}
+ {{/each}}
